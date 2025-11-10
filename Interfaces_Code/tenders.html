@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Browse Tenders - Wasel Procurement Platform</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="custom.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg p-0 fixed-top mb-4">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+            <img src="logo.png" style="height: 90px;">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center gap-3">
+                <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house me-1"></i> Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#features"><i class="bi bi-grid me-1"></i> Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#how-it-works"><i class="bi bi-play-circle me-1"></i> How It Works</a></li>
+                <li class="nav-item"><a class="nav-link active" href="tenders.html"><i class="bi bi-chat-quote me-1"></i> Browse Tenders</a></li>
+                <li class="nav-item ms-2">
+                    <a class="btn btn-outline-primary btn-sm" href="login.html">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary btn-sm ms-2" href="register.html">
+                        <i class="bi bi-person-plus me-1"></i> Get Started
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- TENDERS SECTION -->
+<section class="tenders-section">
+    <div class="page-header">
+        <h1 class="text-white">Browse Available Tenders</h1>
+        <p class="text-white">Discover procurement opportunities from leading manufacturing companies</p>
+    </div>
+    <div class="container">
+
+
+        <!-- Filter Section -->
+        <div class="filter-card">
+            <div class="filter-header">
+                <h3>Filter Tenders</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label class="filter-label">Tender Status</label>
+                        <select class="form-select" id="statusFilter">
+                            <option value="">All Status</option>
+                            <option value="open">Open</option>
+                            <option value="evaluating">Under Evaluation</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label class="filter-label">Category</label>
+                        <select class="form-select" id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="construction">Construction</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="logistics">Logistics</option>
+                            <option value="services">Services</option>
+                            <option value="supplies">Supplies</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label class="filter-label">Location</label>
+                        <select class="form-select" id="locationFilter">
+                            <option value="">All Locations</option>
+                            <option value="riyadh">Riyadh</option>
+                            <option value="jeddah">Jeddah</option>
+                            <option value="dammam">Dammam</option>
+                            <option value="jubail">Jubail</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="filter-group">
+                        <label class="filter-label">Deadline</label>
+                        <select class="form-select" id="deadlineFilter">
+                            <option value="">Any Time</option>
+                            <option value="week">Within 1 Week</option>
+                            <option value="month">Within 1 Month</option>
+                            <option value="quarter">Within 3 Months</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-3">
+                <button class="btn btn-apply" id="applyFilters">
+                    <i class="bi bi-funnel me-2"></i>Apply Filters
+                </button>
+            </div>
+        </div>
+
+        <!-- Tenders List -->
+        <div id="tendersList">
+            <!-- Tender 1 -->
+            <div class="tender-card" data-tender-id="T001">
+                <div class="tender-header">
+                    <div class="tender-title">
+                        <h3>Steel Structure Manufacturing</h3>
+                        <div class="tender-meta">
+                            <div class="meta-item">
+                                <i class="bi bi-calendar"></i>
+                                <span>Published: 2024-01-15</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-clock"></i>
+                                <span>Deadline: 2024-02-15</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-cash-coin"></i>
+                                <span>Budget: $500,000 - $750,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tender-status status-open">Open</div>
+                </div>
+                <div class="tender-description">
+                    Manufacturing of steel structures for industrial facility expansion. Required: ISO 9001 certification, minimum 5 years experience in structural steel fabrication.
+                </div>
+                <div class="tender-footer">
+                    <div class="buyer-info">
+                        <div class="buyer-avatar">SA</div>
+                        <div class="buyer-details">
+                            <h5>Saudi Industrial Co.</h5>
+                            <p>Riyadh, Saudi Arabia</p>
+                        </div>
+                    </div>
+                    <div class="tender-actions">
+                        <button class="btn btn-view me-2">
+                            <i class="bi bi-eye me-1"></i>View Details
+                        </button>
+                        <button class="btn btn-bid">
+                            <i class="bi bi-pencil-square me-1"></i>Submit Bid
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tender 2 -->
+            <div class="tender-card" data-tender-id="T002">
+                <div class="tender-header">
+                    <div class="tender-title">
+                        <h3>Industrial Equipment Maintenance</h3>
+                        <div class="tender-meta">
+                            <div class="meta-item">
+                                <i class="bi bi-calendar"></i>
+                                <span>Published: 2024-01-10</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-clock"></i>
+                                <span>Deadline: 2024-01-30</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-cash-coin"></i>
+                                <span>Budget: $150,000/year</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tender-status status-evaluating">Under Evaluation</div>
+                </div>
+                <div class="tender-description">
+                    Annual maintenance contract for industrial machinery and equipment. Required: Certified technicians, 24/7 support availability, spare parts inventory.
+                </div>
+                <div class="tender-footer">
+                    <div class="buyer-info">
+                        <div class="buyer-avatar">GC</div>
+                        <div class="buyer-details">
+                            <h5>Gulf Chemical Industries</h5>
+                            <p>Jubail, Saudi Arabia</p>
+                        </div>
+                    </div>
+                    <div class="tender-actions">
+                        <button class="btn btn-view me-2">
+                            <i class="bi bi-eye me-1"></i>View Details
+                        </button>
+                        <button class="btn btn-bid" disabled>
+                            <i class="bi bi-clock me-1"></i>Evaluation
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tender 3 -->
+            <div class="tender-card" data-tender-id="T003">
+                <div class="tender-header">
+                    <div class="tender-title">
+                        <h3>Raw Material Supply - Polymer Compounds</h3>
+                        <div class="tender-meta">
+                            <div class="meta-item">
+                                <i class="bi bi-calendar"></i>
+                                <span>Published: 2024-01-05</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-clock"></i>
+                                <span>Deadline: 2024-01-25</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="bi bi-cash-coin"></i>
+                                <span>Budget: $1,200,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tender-status status-closed">Closed</div>
+                </div>
+                <div class="tender-description">
+                    Supply of polymer compounds for manufacturing operations. Required: ISO 14001 certification, batch consistency, monthly delivery capability.
+                </div>
+                <div class="tender-footer">
+                    <div class="buyer-info">
+                        <div class="buyer-avatar">PP</div>
+                        <div class="buyer-details">
+                            <h5>Plastic Products Ltd.</h5>
+                            <p>Jeddah, Saudi Arabia</p>
+                        </div>
+                    </div>
+                    <div class="tender-actions">
+                        <button class="btn btn-view me-2">
+                            <i class="bi bi-eye me-1"></i>View Details
+                        </button>
+                        <button class="btn btn-bid" disabled>
+                            <i class="bi bi-x-circle me-1"></i>Closed
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Tenders pagination">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <!-- Brand Section -->
+            <div class="col-lg-4 ">
+                <h5>
+                    <img src="logo.png" style="height: 90px;">
+                </h5>
+                <p>Streamlining procurement and tendering processes for manufacturing companies and suppliers worldwide with transparency and efficiency.</p>
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#" class="text-white"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-facebook fs-5"></i></a>
+                </div>
+            </div>
+
+            <!-- Platform Section -->
+            <div class="col-lg-2 col-md-4 ">
+                <h5>Platform</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white text-decoration-none">Features</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">How It Works</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Pricing</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Case Studies</a></li>
+                </ul>
+            </div>
+
+            <!-- About Us Section -->
+            <div class="col-lg-3 col-md-4 ">
+                <h5>About Us</h5>
+                <p>Wasel is dedicated to empowering businesses with a unified digital procurement platform. Our mission is to bring transparency, fairness, and efficiency to supplier relationships worldwide.</p>
+            </div>
+
+            <!-- Contact Us Section -->
+            <div class="col-lg-3 col-md-4 ">
+                <h5>Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-geo-alt-fill me-2"></i> 123 Industrial City, Jubail, Saudi Arabia</li>
+                    <li><i class="bi bi-telephone-fill me-2"></i> +966 500 000 000</li>
+                    <li><i class="bi bi-envelope-fill me-2"></i> support@wasel.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center ">
+            <p>&copy; 2025 Wasel. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const tenderCards = document.querySelectorAll('.tender-card');
+
+        applyFiltersBtn.addEventListener('click', function() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const locationFilter = document.getElementById('locationFilter').value;
+            const deadlineFilter = document.getElementById('deadlineFilter').value;
+
+            tenderCards.forEach(card => {
+                let showCard = true;
+
+                // Status filter
+                if (statusFilter) {
+                    const status = card.querySelector('.tender-status').textContent.toLowerCase();
+                    if (!status.includes(statusFilter)) {
+                        showCard = false;
+                    }
+                }
+
+                // Show/hide card based on filters
+                card.style.display = showCard ? 'block' : 'none';
+            });
+        });
+
+        // View tender details
+        document.querySelectorAll('.btn-view').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tenderId = this.closest('.tender-card').getAttribute('data-tender-id');
+                alert(`Viewing details for tender: ${tenderId}`);
+                // In real application, redirect to tender details page
+                // window.location.href = `tender-details.html?id=${tenderId}`;
+            });
+        });
+
+        // Submit bid
+        document.querySelectorAll('.btn-bid:not(:disabled)').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tenderId = this.closest('.tender-card').getAttribute('data-tender-id');
+                alert(`Redirecting to bid submission for tender: ${tenderId}`);
+                // In real application, redirect to bid submission page
+                // window.location.href = `submit-bid.html?tender=${tenderId}`;
+            });
+        });
+    });
+</script>
+</body>
+</html>

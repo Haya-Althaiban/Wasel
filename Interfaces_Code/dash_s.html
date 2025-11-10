@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard - Wasel Procurement Platform</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="custom.css">
+
+    <style>
+
+        /* ======= DASHBOARD SECTION ======= */
+        .dashboard-section {
+            flex: 1;
+            margin-top:91px !important;
+            padding: 3rem 0;
+        }
+
+        /* User Type Selector */
+        .user-type-selector {
+            display: flex;
+            border-radius: 15px;
+            background: rgba(166, 211, 64, 0.1);
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(166, 211, 64, 0.2);
+        }
+
+        .user-type-btn {
+            flex: 1;
+            text-align: center;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: transparent;
+            color: var(--ink-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .user-type-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 5px 15px rgba(74, 87, 41, 0.2);
+        }
+
+        /* Welcome Header */
+        .welcome-header {
+            background: linear-gradient(135deg, var(--brand-dark), var(--brand-accent));
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .welcome-title {
+            font-weight: 800;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-subtitle {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--brand-accent);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            font-weight: 600;
+            color: var(--ink-700);
+            font-size: 0.9rem;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(166, 211, 64, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-accent);
+            font-size: 1.2rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--brand-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            color: #28a745;
+        }
+
+        .trend-down {
+            color: #dc3545;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(74, 87, 41, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(166, 211, 64, 0.3);
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: var(--brand-dark);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-title i {
+            color: var(--brand-accent);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: rgba(166, 211, 64, 0.1);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--brand-dark);
+            border-bottom: 2px solid rgba(166, 211, 64, 0.3);
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(74, 87, 41, 0.1);
+            vertical-align: middle;
+        }
+
+        .entity-title {
+            font-weight: 600;
+            color: var(--brand-dark);
+        }
+
+        .entity-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .entity-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-open {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .status-evaluating {
+            background: rgba(13, 110, 253, 0.2);
+            color: #0d6efd;
+        }
+
+        .status-awarded {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .status-closed {
+            background: rgba(108, 117, 125, 0.2);
+            color: #6c757d;
+        }
+
+        .status-submitted {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-won {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .status-lost {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+
+        /* Action Buttons */
+        .btn-action {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-view {
+            background: rgba(166, 211, 64, 0.1);
+            color: var(--brand-dark);
+            border: 1px solid rgba(166, 211, 64, 0.3);
+        }
+
+        .btn-view:hover {
+            background: var(--brand-accent);
+            color: white;
+        }
+
+        .btn-manage {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            border: 1px solid rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-manage:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            border-color: var(--brand-accent);
+        }
+
+        .action-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 auto 1rem auto;
+        }
+
+        .action-title {
+            font-weight: 700;
+            color: var(--brand-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .action-description {
+            color: var(--ink-700);
+            font-size: 0.9rem;
+        }
+
+        /* Activity List */
+        .activity-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(74, 87, 41, 0.1);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(166, 211, 64, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-accent);
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: var(--brand-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-description {
+            color: var(--ink-700);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--ink-500);
+        }
+
+        /* Performance Chart */
+        .performance-chart {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .chart-placeholder {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-500);
+            font-weight: 600;
+        }
+
+        /* ======= RESPONSIVE ======= */
+        @media (max-width: 768px) {
+            .dashboard-section {
+                padding: 2rem 0;
+            }
+
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .user-type-selector {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg p-0 fixed-top mb-4">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+            <img src="logo.png" style="height: 90px;">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+
+            <ul class="navbar-nav ms-auto align-items-center gap-3">
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a class="btn btn-light border  d-flex align-items-center justify-content-center"
+                       href="dashboard.html" title="Dashboard" >
+                        <i class="bi bi-speedometer2 fs-5 text-primary mr-3" style="    margin-right: 10px;"></i> Dashboard
+                    </a>
+                </li>
+
+                <!-- Notifications -->
+                <li class="nav-item dropdown">
+                    <a class="btn btn-light border rounded-circle d-flex align-items-center justify-content-center position-relative"
+                       href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                       title="Notifications" style="width:45px; height:45px;">
+                        <i class="bi bi-bell fs-5 text-warning"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                        <li><a class="dropdown-item" href="#">New tender available</a></li>
+                        <li><a class="dropdown-item" href="#">Your bid was accepted</a></li>
+                        <li><a class="dropdown-item" href="#">System update scheduled</a></li>
+                    </ul>
+                </li>
+
+                <!-- Logout -->
+                <li class="nav-item">
+                    <a class="btn btn-light border rounded-circle d-flex align-items-center justify-content-center"
+                       href="logout.html" title="Logout" style="width:45px; height:45px;">
+                        <i class="bi bi-box-arrow-right fs-5 text-danger"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- DASHBOARD SECTION -->
+<section class="dashboard-section mt-5">
+    <div class="container">
+        <!-- User Type Selector -->
+        <div class="user-type-selector">
+            <button class="user-type-btn active" data-user-type="buyer">
+                <i class="bi bi-building"></i>
+                Buyer Dashboard
+            </button>
+            <button class="user-type-btn" data-user-type="seller">
+                <i class="bi bi-truck"></i>
+                Seller Dashboard
+            </button>
+        </div>
+
+        <!-- Welcome Header -->
+        <div class="welcome-header">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="welcome-title" id="welcomeTitle">Welcome back, Buyer!</h1>
+                    <p class="welcome-subtitle" id="welcomeSubtitle">Manage your account</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <button class="btn btn-light btn-lg" id="mainActionBtn">
+                        <i class="bi bi-plus-circle me-2"></i>Create New Tender
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid" id="statsGrid">
+            <!-- Buyer Stats -->
+            <div class="stat-card buyer-stats">
+                <div class="stat-header">
+                    <div class="stat-title">ACTIVE TENDERS</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-megaphone"></i>
+                    </div>
+                </div>
+                <div class="stat-value">8</div>
+                <div class="stat-trend trend-up">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>+2 from last month</span>
+                </div>
+            </div>
+
+            <div class="stat-card buyer-stats">
+                <div class="stat-header">
+                    <div class="stat-title">TOTAL BIDS RECEIVED</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-inbox"></i>
+                    </div>
+                </div>
+                <div class="stat-value">47</div>
+                <div class="stat-trend trend-up">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>+12 this month</span>
+                </div>
+            </div>
+
+            <div class="stat-card buyer-stats">
+                <div class="stat-header">
+                    <div class="stat-title">COST SAVINGS</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                </div>
+                <div class="stat-value">18%</div>
+                <div class="stat-trend trend-up">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>+3% improvement</span>
+                </div>
+            </div>
+
+            <div class="stat-card buyer-stats">
+                <div class="stat-header">
+                    <div class="stat-title">AVG. RESPONSE TIME</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-value">1.2 Days</div>
+                <div class="stat-trend trend-down">
+                    <i class="bi bi-arrow-down"></i>
+                    <span>Faster processing</span>
+                </div>
+            </div>
+
+            <!-- Seller Stats (Hidden by default) -->
+            <div class="stat-card seller-stats" style="display: none;">
+                <div class="stat-header">
+                    <div class="stat-title">ACTIVE BIDS</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-megaphone"></i>
+                    </div>
+                </div>
+                <div class="stat-value">12</div>
+                <div class="stat-trend trend-up">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>+3 from last month</span>
+                </div>
+            </div>
+
+            <div class="stat-card seller-stats" style="display: none;">
+                <div class="stat-header">
+                    <div class="stat-title">SUCCESS RATE</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-trophy"></i>
+                    </div>
+                </div>
+                <div class="stat-value">68%</div>
+                <div class="stat-trend trend-up">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>+5% improvement</span>
+                </div>
+            </div>
+
+            <div class="stat-card seller-stats" style="display: none;">
+                <div class="stat-header">
+                    <div class="stat-title">TOTAL REVENUE</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-currency-dollar"></i>
+                    </div>
+                </div>
+                <div class="stat-value">$1.2M</div>
+                <div class="stat-trend trend-up">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>+$240K this quarter</span>
+                </div>
+            </div>
+
+            <div class="stat-card seller-stats" style="display: none;">
+                <div class="stat-header">
+                    <div class="stat-title">AVG. RESPONSE TIME</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-value">2.3 Days</div>
+                <div class="stat-trend trend-down">
+                    <i class="bi bi-arrow-down"></i>
+                    <span>Faster than average</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Recent Tenders/Bids -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title" id="mainTableTitle">
+                            <i class="bi bi-clock-history"></i>
+                            Recent Tenders
+                        </h3>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table" id="mainDataTable">
+                            <!-- Buyer Table -->
+                            <thead class="buyer-table">
+                            <tr>
+                                <th>Tender Title</th>
+                                <th>Category</th>
+                                <th>Bids Received</th>
+                                <th>Status</th>
+                                <th>Deadline</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody class="buyer-table">
+                            <tr>
+                                <td>
+                                    <div class="entity-title">Steel Structure Manufacturing</div>
+                                    <small class="text-muted">Published: Jan 15, 2024</small>
+                                </td>
+                                <td>Manufacturing</td>
+                                <td>
+                                    <strong>12</strong>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-open">Open</span>
+                                </td>
+                                <td>
+                                    <strong>Feb 15, 2024</strong>
+                                </td>
+                                <td>
+                                    <button class="btn btn-action btn-view btn-sm">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="entity-title">Industrial Equipment Maintenance</div>
+                                    <small class="text-muted">Published: Jan 10, 2024</small>
+                                </td>
+                                <td>Services</td>
+                                <td>
+                                    <strong>8</strong>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-evaluating">Evaluating</span>
+                                </td>
+                                <td>
+                                    <strong>Jan 30, 2024</strong>
+                                </td>
+                                <td>
+                                    <button class="btn btn-action btn-view btn-sm">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="entity-title">Raw Material Supply</div>
+                                    <small class="text-muted">Published: Jan 5, 2024</small>
+                                </td>
+                                <td>Supplies</td>
+                                <td>
+                                    <strong>15</strong>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-awarded">Awarded</span>
+                                </td>
+                                <td>
+                                    <strong>Jan 25, 2024</strong>
+                                </td>
+                                <td>
+                                    <button class="btn btn-action btn-view btn-sm">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                            </tbody>
+
+                            <!-- Seller Table (Hidden by default) -->
+                            <thead class="seller-table" style="display: none;">
+                            <tr>
+                                <th>Tender</th>
+                                <th>Buyer</th>
+                                <th>Bid Amount</th>
+                                <th>Status</th>
+                                <th>Score</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody class="seller-table" style="display: none;">
+                            <tr>
+                                <td>
+                                    <div class="entity-title">Steel Structure Manufacturing</div>
+                                    <small class="text-muted">Submitted: Jan 20, 2024</small>
+                                </td>
+                                <td>
+                                    <div class="entity-info">
+                                        <div class="entity-avatar">SI</div>
+                                        <div>Saudi Industrial Co.</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>$520,000</strong>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-evaluating">Under Evaluation</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-open">85</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-action btn-view btn-sm">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="entity-title">Industrial Equipment Maintenance</div>
+                                    <small class="text-muted">Submitted: Jan 18, 2024</small>
+                                </td>
+                                <td>
+                                    <div class="entity-info">
+                                        <div class="entity-avatar">GC</div>
+                                        <div>Gulf Chemical Industries</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>$145,000</strong>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-won">Contract Awarded</span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-open">92</span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-action btn-view btn-sm">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Performance Overview -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="bi bi-graph-up"></i>
+                            Performance Overview
+                        </h3>
+                        <div class="card-actions">
+                            <select class="form-select form-select-sm" style="width: auto;">
+                                <option>Last 30 Days</option>
+                                <option>Last 90 Days</option>
+                                <option>Last 12 Months</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="chart-placeholder">
+                        <i class="bi bi-bar-chart me-2"></i>
+                        <span id="chartTitle">Procurement Performance & Cost Savings Chart</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Quick Actions -->
+                <div class="content-card mb-4">
+                    <h3 class="card-title">
+                        <i class="bi bi-lightning"></i>
+                        Quick Actions
+                    </h3>
+                    <div class="quick-actions" id="quickActions">
+                        <!-- Buyer Actions -->
+                        <div class="action-card buyer-actions" onclick="window.location.href='create-tender.html'">
+                            <div class="action-icon">
+                                <i class="bi bi-plus-circle"></i>
+                            </div>
+                            <div class="action-title">Create Tender</div>
+                            <div class="action-description">Publish new procurement</div>
+                        </div>
+
+                        <div class="action-card buyer-actions" onclick="window.location.href='tenders.html'">
+                            <div class="action-icon">
+                                <i class="bi bi-search"></i>
+                            </div>
+                            <div class="action-title">Manage Tenders</div>
+                            <div class="action-description">View all your tenders</div>
+                        </div>
+
+                        <div class="action-card buyer-actions" onclick="window.location.href='suppliers.html'">
+                            <div class="action-icon">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="action-title">Supplier Directory</div>
+                            <div class="action-description">Find verified suppliers</div>
+                        </div>
+
+                        <div class="action-card buyer-actions" onclick="window.location.href='reports.html'">
+                            <div class="action-icon">
+                                <i class="bi bi-graph-up"></i>
+                            </div>
+                            <div class="action-title">Reports</div>
+                            <div class="action-description">View analytics</div>
+                        </div>
+
+                        <!-- Seller Actions (Hidden by default) -->
+                        <div class="action-card seller-actions" style="display: none;" onclick="window.location.href='tenders.html'">
+                            <div class="action-icon">
+                                <i class="bi bi-search"></i>
+                            </div>
+                            <div class="action-title">Find Tenders</div>
+                            <div class="action-description">Browse new opportunities</div>
+                        </div>
+
+                        <div class="action-card seller-actions" style="display: none;" onclick="window.location.href='submit-bid.html'">
+                            <div class="action-icon">
+                                <i class="bi bi-pencil-square"></i>
+                            </div>
+                            <div class="action-title">Submit Bid</div>
+                            <div class="action-description">Create new proposal</div>
+                        </div>
+
+                        <div class="action-card seller-actions" style="display: none;" onclick="window.location.href='profile.html'">
+                            <div class="action-icon">
+                                <i class="bi bi-person-gear"></i>
+                            </div>
+                            <div class="action-title">Update Profile</div>
+                            <div class="action-description">Edit company info</div>
+                        </div>
+
+                        <div class="action-card seller-actions" style="display: none;" onclick="window.location.href='documents.html'">
+                            <div class="action-icon">
+                                <i class="bi bi-folder"></i>
+                            </div>
+                            <div class="action-title">Documents</div>
+                            <div class="action-description">Manage files</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <!-- Brand Section -->
+            <div class="col-lg-4 ">
+                <h5>
+                    <img src="logo.png" style="height: 90px;">
+                </h5>
+                <p>Streamlining procurement and tendering processes for manufacturing companies and suppliers worldwide with transparency and efficiency.</p>
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#" class="text-white"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-facebook fs-5"></i></a>
+                </div>
+            </div>
+
+            <!-- Platform Section -->
+            <div class="col-lg-2 col-md-4 ">
+                <h5>Platform</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white text-decoration-none">Features</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">How It Works</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Pricing</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Case Studies</a></li>
+                </ul>
+            </div>
+
+            <!-- About Us Section -->
+            <div class="col-lg-3 col-md-4 ">
+                <h5>About Us</h5>
+                <p>Wasel is dedicated to empowering businesses with a unified digital procurement platform. Our mission is to bring transparency, fairness, and efficiency to supplier relationships worldwide.</p>
+            </div>
+
+            <!-- Contact Us Section -->
+            <div class="col-lg-3 col-md-4 ">
+                <h5>Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-geo-alt-fill me-2"></i> 123 Industrial City, Jubail, Saudi Arabia</li>
+                    <li><i class="bi bi-telephone-fill me-2"></i> +966 500 000 000</li>
+                    <li><i class="bi bi-envelope-fill me-2"></i> support@wasel.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center ">
+            <p>&copy; 2025 Wasel. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const userTypeBtns = document.querySelectorAll('.user-type-btn');
+        let currentUserType = 'buyer';
+
+        function switchUserType(userType) {
+            currentUserType = userType;
+
+            // Update active button
+            userTypeBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.userType === userType) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update welcome section
+            const welcomeTitle = document.getElementById('welcomeTitle');
+            const welcomeSubtitle = document.getElementById('welcomeSubtitle');
+            const mainActionBtn = document.getElementById('mainActionBtn');
+
+            if (userType === 'buyer') {
+                welcomeTitle.textContent = 'Welcome back, Buyer!';
+                welcomeSubtitle.textContent = 'Manage your Account';
+
+                mainActionBtn.innerHTML = '<i class="bi bi-plus-circle me-2"></i>Create New Tender';
+                mainActionBtn.onclick = () => window.location.href = 'create-tender.html';
+            } else {
+                welcomeTitle.textContent = 'Welcome back, Seller.!';
+                welcomeSubtitle.textContent = 'Track your bids and discover new opportunities';
+                mainActionBtn.innerHTML = '<i class="bi bi-search me-2"></i>Find New Tenders';
+                mainActionBtn.onclick = () => window.location.href = 'tenders.html';
+            }
+
+            // Update stats
+            document.querySelectorAll('.buyer-stats').forEach(el => {
+                el.style.display = userType === 'buyer' ? 'block' : 'none';
+            });
+            document.querySelectorAll('.seller-stats').forEach(el => {
+                el.style.display = userType === 'seller' ? 'block' : 'none';
+            });
+
+            // Update main table
+            const mainTableTitle = document.getElementById('mainTableTitle');
+            const viewAllLink = document.getElementById('viewAllLink');
+
+            if (userType === 'buyer') {
+                mainTableTitle.innerHTML = '<i class="bi bi-clock-history"></i> Recent Tenders';
+                viewAllLink.textContent = 'View All Tenders';
+                viewAllLink.href = 'tenders.html';
+
+                document.querySelectorAll('.buyer-table').forEach(el => {
+                    el.style.display = 'table-header-group';
+                });
+                document.querySelectorAll('.seller-table').forEach(el => {
+                    el.style.display = 'none';
+                });
+            } else {
+                mainTableTitle.innerHTML = '<i class="bi bi-clock-history"></i> Recent Bids';
+                viewAllLink.textContent = 'View All Bids';
+                viewAllLink.href = 'my-bids.html';
+
+                document.querySelectorAll('.buyer-table').forEach(el => {
+                    el.style.display = 'none';
+                });
+                document.querySelectorAll('.seller-table').forEach(el => {
+                    el.style.display = 'table-header-group';
+                });
+            }
+
+            // Update quick actions
+            document.querySelectorAll('.buyer-actions').forEach(el => {
+                el.style.display = userType === 'buyer' ? 'block' : 'none';
+            });
+            document.querySelectorAll('.seller-actions').forEach(el => {
+                el.style.display = userType === 'seller' ? 'block' : 'none';
+            });
+
+            // Update activities
+            document.querySelectorAll('.buyer-activities').forEach(el => {
+                el.style.display = userType === 'buyer' ? 'flex' : 'none';
+            });
+            document.querySelectorAll('.seller-activities').forEach(el => {
+                el.style.display = userType === 'seller' ? 'flex' : 'none';
+            });
+
+            // Update chart title
+            const chartTitle = document.getElementById('chartTitle');
+            chartTitle.textContent = userType === 'buyer'
+                ? 'Procurement Performance & Cost Savings Chart'
+                : 'Bid Success Rate & Revenue Performance Chart';
+        }
+
+        // Add click events to user type buttons
+        userTypeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                switchUserType(this.dataset.userType);
+            });
+        });
+
+        // Add interactive functionality
+        const actionCards = document.querySelectorAll('.action-card');
+        actionCards.forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    });
+</script>
+</body>
+</html>

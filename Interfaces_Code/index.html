@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wasel – Smart Tendering Platform</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="custom.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg p-0 fixed-top mb-4">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+            <img src="logo.png" style="height: 90px;">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center gap-3">
+                <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-house me-1"></i> Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#features"><i class="bi bi-grid me-1"></i> Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#how-it-works"><i class="bi bi-play-circle me-1"></i> How It Works</a></li>
+                <li class="nav-item"><a class="nav-link" href="#testimonials"><i class="bi bi-chat-quote me-1"></i> Browse Tenders</a></li>
+                <li class="nav-item ms-2">
+                    <a class="btn btn-outline-primary btn-sm" href="#">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary btn-sm ms-2" href="#">
+                        <i class="bi bi-person-plus me-1"></i> Get Started
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero-section mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 hero-content fade-in-up">
+          <span class="hero-kicker">
+            <i class="bi bi-stars"></i>
+            Streamlined • Automated • Secure
+          </span>
+
+                <h1 class="hero-title">
+                    Transform Your <span class="highlight">Procurement</span> Process
+                </h1>
+
+                <p class="hero-subtitle">
+                    Wasel provides a unified digital platform for manufacturing companies and suppliers to efficiently manage tenders, bids, and contracts with full transparency and automation.
+                </p>
+
+                <div class="hero-cta d-flex flex-wrap gap-2">
+                    <a href="#" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2"></i> Create Tender
+                    </a>
+                    <a href="#" class="btn btn-outline-primary">
+                        <i class="bi bi-search me-2"></i> Browse Tenders
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-7 fade-in-up delay-1">
+                <div class="hero-card">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                <span class="feature-icon" style="background: var(--gradient-secondary);">
+                  <i class="bi bi-clipboard-data"></i>
+                </span>
+                            <div>
+                                <div class="fw-bold">Live Bid Comparison</div>
+                                <small class="text-secondary">Based on Price, Quality, Compliance & Timeline</small>
+                            </div>
+                        </div>
+                        <span class="badge bg-success rounded-pill">
+                <i class="bi bi-lightning-charge me-1"></i> Auto-Evaluate
+              </span>
+                    </div>
+
+                    <div class="table-responsive rounded-3 border">
+                        <table class="table align-middle mb-0">
+                            <thead class="table-light">
+                            <tr>
+                                <th>Supplier</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Quality</th>
+                                <th class="text-center">Compliance</th>
+                                <th class="text-center">Timeline</th>
+                                <th class="text-center">Score</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="fw-semibold"><i class="bi bi-building me-1"></i> Alpha Steel</td>
+                                <td class="text-center">$120,000</td>
+                                <td class="text-center"><span class="badge bg-warning">4.5/5</span></td>
+                                <td class="text-center"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                <td class="text-center">6 weeks</td>
+                                <td class="text-center fw-bold text-success">92</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold"><i class="bi bi-building me-1"></i> Delta Metals</td>
+                                <td class="text-center">$115,000</td>
+                                <td class="text-center"><span class="badge bg-warning">4.2/5</span></td>
+                                <td class="text-center"><i class="bi bi-check-circle-fill text-success"></i></td>
+                                <td class="text-center">7 weeks</td>
+                                <td class="text-center fw-bold">88</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-semibold"><i class="bi bi-building me-1"></i> Orion Supplies</td>
+                                <td class="text-center">$124,000</td>
+                                <td class="text-center"><span class="badge bg-warning">4.8/5</span></td>
+                                <td class="text-center"><i class="bi bi-x-circle-fill text-danger"></i></td>
+                                <td class="text-center">6 weeks</td>
+                                <td class="text-center fw-bold">81</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <small><i class="bi bi-briefcase me-1"></i> Active Tenders</small>
+                            <h4>128</h4>
+                        </div>
+                        <div class="hero-stat">
+                            <small><i class="bi bi-people-fill me-1"></i> Verified Suppliers</small>
+                            <h4>4,360</h4>
+                        </div>
+                        <div class="hero-stat">
+                            <small><i class="bi bi-piggy-bank me-1"></i> Avg. Savings</small>
+                            <h4>14.6%</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section id="features" class="section bg-light">
+    <div class="container">
+        <div class="section-title fade-in-up">
+            <h2>Powerful Features for Your Procurement Needs</h2>
+            <p>Wasel offers a comprehensive set of tools to streamline your entire procurement and tendering process</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 fade-in-up delay-1">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                    <h4>Tender Management</h4>
+                    <p>Create detailed tenders with specifications, requirements, and deadlines. Manage the entire tender lifecycle from creation to award.</p>
+                    <small class="text-muted">Entity: TENDERS, CRITERIA</small>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 fade-in-up delay-2">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h4>Bid Comparison & Evaluation</h4>
+                    <p>Automatically compare supplier bids based on price, quality, compliance, and delivery timelines with intelligent scoring.</p>
+                    <small class="text-muted">Entity: BIDS, CRITERIA</small>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 fade-in-up delay-3">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h4>Secure Document Storage</h4>
+                    <p>Keep contracts, certifications, and bid documents safe with role-based access and multi-factor authentication.</p>
+                    <small class="text-muted">Entity: DOCUMENT, USER</small>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 fade-in-up">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-bar-chart"></i>
+                    </div>
+                    <h4>Real-time Dashboards</h4>
+                    <p>Monitor procurement KPIs, supplier performance, and cost savings with comprehensive, real-time dashboards.</p>
+                    <small class="text-muted">Entity: TENDERS, BIDS, CONTRACT</small>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 fade-in-up delay-1">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-chat-dots"></i>
+                    </div>
+                    <h4>Communication Tools</h4>
+                    <p>Facilitate clarifications between buyers and suppliers with our integrated messaging system.</p>
+                    <small class="text-muted">Entity: MESSAGE, USER</small>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 fade-in-up delay-2">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-credit-card"></i>
+                    </div>
+                    <h4>Payment Processing</h4>
+                    <p>Integrated payment gateway with automatic commission calculation and secure transaction processing.</p>
+                    <small class="text-muted">Entity: TRANSACTION, CONTRACT</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS SECTION -->
+<section id="how-it-works" class="section">
+    <div class="container">
+        <div class="section-title fade-in-up">
+            <h2>How Wasel Works</h2>
+            <p>A simple, streamlined process for both buyers and suppliers</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <h3 class="mb-4">For Manufacturing Companies</h3>
+
+                <div class="process-step fade-in-up">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Create Your Profile</h4>
+                        <p>Set up your company account with detailed information and procurement team members.</p>
+                    </div>
+                </div>
+
+                <div class="process-step fade-in-up delay-1">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Publish Tenders</h4>
+                        <p>Create detailed tenders with specifications, requirements, evaluation criteria, and deadlines.</p>
+                    </div>
+                </div>
+
+                <div class="process-step fade-in-up delay-2">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Evaluate Bids</h4>
+                        <p>Use our automated scoring system to compare bids based on price, quality, compliance, and timeline.</p>
+                    </div>
+                </div>
+
+                <div class="process-step fade-in-up delay-3">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Award & Manage</h4>
+                        <p>Select the best supplier, create contracts, track delivery, and rate supplier performance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <h3 class="mb-4">For Suppliers</h3>
+
+                <div class="process-step fade-in-up">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Register Your Business</h4>
+                        <p>Create a supplier profile with certifications, capabilities, and performance history.</p>
+                    </div>
+                </div>
+
+                <div class="process-step fade-in-up delay-1">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Find Opportunities</h4>
+                        <p>Browse available tenders that match your expertise and receive notifications for new opportunities.</p>
+                    </div>
+                </div>
+
+                <div class="process-step fade-in-up delay-2">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Submit Bids</h4>
+                        <p>Submit electronic bids with required documentation and communicate with buyers for clarifications.</p>
+                    </div>
+                </div>
+
+                <div class="process-step fade-in-up delay-3">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Manage Contracts</h4>
+                        <p>Track contract status, delivery schedules, and receive payments through our secure gateway.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <!-- Brand Section -->
+            <div class="col-lg-4 ">
+                <h5>
+                    <img src="logo.png" style="height: 90px;">
+                </h5>
+                <p>Streamlining procurement and tendering processes for manufacturing companies and suppliers worldwide with transparency and efficiency.</p>
+                <div class="d-flex gap-3 mt-3">
+                    <a href="#" class="text-white"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-facebook fs-5"></i></a>
+                </div>
+            </div>
+
+            <!-- Platform Section -->
+            <div class="col-lg-2 col-md-4 ">
+                <h5>Platform</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white text-decoration-none">Features</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">How It Works</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Pricing</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Case Studies</a></li>
+                </ul>
+            </div>
+
+            <!-- About Us Section -->
+            <div class="col-lg-3 col-md-4 ">
+                <h5>About Us</h5>
+                <p>Wasel is dedicated to empowering businesses with a unified digital procurement platform. Our mission is to bring transparency, fairness, and efficiency to supplier relationships worldwide.</p>
+            </div>
+
+            <!-- Contact Us Section -->
+            <div class="col-lg-3 col-md-4 ">
+                <h5>Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-geo-alt-fill me-2"></i> 123 Industrial City, Jubail, Saudi Arabia</li>
+                    <li><i class="bi bi-telephone-fill me-2"></i> +966 500 000 000</li>
+                    <li><i class="bi bi-envelope-fill me-2"></i> support@wasel.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center ">
+            <p>&copy; 2025 Wasel. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            document.querySelector('.navbar').classList.add('scrolled');
+        } else {
+            document.querySelector('.navbar').classList.remove('scrolled');
+        }
+    });
+
+    // Simple animation on scroll
+    window.addEventListener('load', function() {
+        const fadeElements = document.querySelectorAll('.fade-in-up');
+
+        const fadeInOnScroll = function() {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        // Initial check
+        fadeInOnScroll();
+
+        // Check on scroll
+        window.addEventListener('scroll', fadeInOnScroll);
+    });
+</script>
+</body>
+</html>

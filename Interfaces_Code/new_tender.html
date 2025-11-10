@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create New Tender - Wasel Procurement Platform</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="custom.css">
+
+  <style>
+    /* ======= CREATE TENDER SECTION ======= */
+    .create-tender-section {
+      flex: 1;
+      padding: 6rem 0;
+    }
+
+    .breadcrumb-nav {
+      /* margin-bottom: 2rem; */
+      /*background: #b7ded6;*/
+      padding: 11px;
+      margin: 21px;
+      border: 2px solid #f8fdfe;
+      border-radius: 10px;
+    }
+    .breadcrumb {
+      margin-bottom: 0 !important;
+    }
+    .breadcrumb-item a {
+      color: var(--brand-dark);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .breadcrumb-item.active {
+      color: var(--ink-500);
+    }
+
+    /* Page Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--brand-dark);
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.2rem;
+      color: var(--ink-700);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Form Container */
+    .form-container {
+      background: white;
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(74, 87, 41, 0.1);
+    }
+
+    /* Form Steps */
+    .form-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .form-steps::before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(74, 87, 41, 0.2);
+      z-index: 1;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid rgba(74, 87, 41, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--ink-500);
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .step.active .step-number {
+      background: var(--gradient-primary);
+      border-color: var(--brand-accent);
+      color: white;
+    }
+
+    .step.completed .step-number {
+      background: var(--brand-accent);
+      border-color: var(--brand-accent);
+      color: white;
+    }
+
+    .step-label {
+      font-weight: 600;
+      color: var(--ink-500);
+      font-size: 0.9rem;
+    }
+
+    .step.active .step-label {
+      color: var(--brand-dark);
+    }
+
+    /* Form Sections */
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid rgba(166, 211, 64, 0.3);
+    }
+
+    .section-title {
+      font-weight: 700;
+      color: var(--brand-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title i {
+      color: var(--brand-accent);
+    }
+
+    .section-description {
+      color: var(--ink-700);
+      font-size: 0.95rem;
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 2rem;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: var(--ink-900);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-label i {
+      color: var(--brand-accent);
+    }
+
+    .form-control,
+    .form-select,
+    .form-textarea {
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      border: 1px solid rgba(74, 87, 41, 0.2);
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    .form-control:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--brand-accent);
+      box-shadow: 0 0 0 0.2rem rgba(166, 211, 64, 0.25);
+      outline: none;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .input-group-text {
+      background: rgba(166, 211, 64, 0.1);
+      border: 1px solid rgba(74, 87, 41, 0.2);
+      color: var(--brand-dark);
+      font-weight: 600;
+    }
+
+    .form-text {
+      font-size: 0.9rem;
+      color: var(--ink-500);
+      margin-top: 0.5rem;
+    }
+
+    /* Criteria Section */
+    .criteria-section {
+      background: rgba(166, 211, 64, 0.05);
+      border: 1px solid rgba(166, 211, 64, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .criteria-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .criteria-title {
+      font-weight: 600;
+      color: var(--brand-dark);
+      margin: 0;
+    }
+
+    .criteria-item {
+      background: white;
+      border: 1px solid rgba(74, 87, 41, 0.1);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .criteria-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr auto;
+      gap: 1rem;
+      align-items: end;
+    }
+
+    .total-weight {
+      text-align: right;
+      font-weight: 600;
+      color: var(--brand-dark);
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid rgba(166, 211, 64, 0.3);
+    }
+
+    /* Form Navigation */
+    .form-navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(74, 87, 41, 0.1);
+    }
+
+    .btn-nav {
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-prev {
+      background: rgba(166, 211, 64, 0.1);
+      color: var(--brand-dark);
+      border: 1px solid rgba(166, 211, 64, 0.3);
+    }
+
+    .btn-prev:hover {
+      background: var(--brand-accent);
+      color: white;
+    }
+
+    .btn-next {
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(74, 87, 41, 0.3);
+    }
+
+    .btn-submit {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 1rem 3rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(74, 87, 41, 0.3);
+    }
+
+    /* Preview Section */
+    .preview-card {
+      background: white;
+      border: 1px solid rgba(74, 87, 41, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(74, 87, 41, 0.1);
+    }
+
+    .preview-title {
+      font-weight: 700;
+      color: var(--brand-dark);
+      margin: 0;
+    }
+
+    .preview-content {
+      color: var(--ink-700);
+    }
+
+    .preview-row {
+      display: flex;
+      justify-content: between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(74, 87, 41, 0.05);
+    }
+
+    .preview-label {
+      font-weight: 600;
+      color: var(--ink-700);
+    }
+
+    .preview-value {
+      color: var(--brand-dark);
+      font-weight: 500;
+    }
+
+    /* ======= RESPONSIVE ======= */
+    @media (max-width: 768px) {
+      .create-tender-section {
+        padding: 2rem 0;
+      }
+
+      .form-container {
+        padding: 2rem;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .form-steps {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .form-steps::before {
+        display: none;
+      }
+
+      .step {
+        flex-direction: row;
+        gap: 1rem;
+      }
+
+      .criteria-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-navigation {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .btn-nav {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg p-0 fixed-top mb-4">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <img src="logo.png" style="height: 90px;">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+
+      <ul class="navbar-nav ms-auto align-items-center gap-3">
+        <!-- Dashboard -->
+        <li class="nav-item">
+          <a class="btn btn-light border  d-flex align-items-center justify-content-center"
+             href="dashboard.html" title="Dashboard" >
+            <i class="bi bi-speedometer2 fs-5 text-primary mr-3" style="    margin-right: 10px;"></i> Dashboard
+          </a>
+        </li>
+
+        <!-- Notifications -->
+        <li class="nav-item dropdown">
+          <a class="btn btn-light border rounded-circle d-flex align-items-center justify-content-center position-relative"
+             href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+             title="Notifications" style="width:45px; height:45px;">
+            <i class="bi bi-bell fs-5 text-warning"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                        </span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+            <li><a class="dropdown-item" href="#">New tender available</a></li>
+            <li><a class="dropdown-item" href="#">Your bid was accepted</a></li>
+            <li><a class="dropdown-item" href="#">System update scheduled</a></li>
+          </ul>
+        </li>
+
+        <!-- Logout -->
+        <li class="nav-item">
+          <a class="btn btn-light border rounded-circle d-flex align-items-center justify-content-center"
+             href="logout.html" title="Logout" style="width:45px; height:45px;">
+            <i class="bi bi-box-arrow-right fs-5 text-danger"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- CREATE TENDER SECTION -->
+  <section class="create-tender-section">
+
+
+
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb-nav">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html"><i class="bi bi-house"></i></a></li>
+          <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+          <li class="breadcrumb-item"><a href="tenders.html">My Tenders</a></li>
+          <li class="breadcrumb-item active">Create New Tender</li>
+        </ol>
+      </nav>
+
+
+
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="form-container">
+            <!-- Form Steps -->
+            <div class="form-steps">
+              <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Tender Details</div>
+              </div>
+              <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Evaluation Criteria</div>
+              </div>
+              <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">Review & Submit</div>
+              </div>
+            </div>
+
+            <!-- Step 1: Tender Details -->
+            <div class="form-section active" id="step1">
+              <div class="section-header">
+                <h2 class="section-title">
+                  <i class="bi bi-info-circle"></i>
+                  Tender Basic Information
+                </h2>
+                <p class="section-description">Provide the essential details about your procurement needs</p>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">
+                      <i class="bi bi-card-heading"></i>
+                      Tender_Title *
+                    </label>
+                    <input type="text" class="form-control" id="tenderTitle"
+                      placeholder="" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">
+                      <i class="bi bi-card-heading"></i>
+                      Budget *
+                    </label>
+                    <input type="text" class="form-control" id="Budget"
+                           placeholder="" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-label">
+                      <i class="bi bi-tags"></i>
+                      Tender_Subject *
+                    </label>
+                    <select class="form-select" id="tenderSubject" required>
+                      <option value="">Select Category</option>
+                      <option value="construction">Construction</option>
+                      <option value="manufacturing">Manufacturing</option>
+                      <option value="logistics">Logistics & Supply Chain</option>
+                      <option value="services">Professional Services</option>
+                      <option value="supplies">Raw Materials & Supplies</option>
+                      <option value="equipment">Equipment & Machinery</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="bi bi-text-paragraph"></i>
+                  Tender_Description *
+                </label>
+                <textarea class="form-control form-textarea" id="tenderDescription"
+                  placeholder=""
+                  required></textarea>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-label">
+                      <i class="bi bi-calendar"></i>
+                      Publish_Date *
+                    </label>
+                    <input type="date" class="form-control" id="publishDate" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-label">
+                      <i class="bi bi-clock"></i>
+                      Submission_Deadline *
+                    </label>
+                    <input type="datetime-local" class="form-control" id="submissionDeadline" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-label">
+                      <i class="bi bi-award"></i>
+                      Award_Date
+                    </label>
+                    <input type="date" class="form-control" id="awardDate">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="bi bi-list-check"></i>
+                  Technical Specifications & Requirements
+                </label>
+                <textarea class="form-control form-textarea" id="technicalSpecs"
+                  placeholder=""></textarea>
+              </div>
+            </div>
+
+            <!-- Step 2: Evaluation Criteria -->
+            <div class="form-section" id="step2">
+              <div class="section-header">
+                <h2 class="section-title">
+                  <i class="bi bi-clipboard-check"></i>
+                  Bid Evaluation Criteria
+                </h2>
+                <p class="section-description">Define how bids will be evaluated and scored (CRITERIA Entity)</p>
+              </div>
+
+              <div class="criteria-section">
+                <div class="criteria-header">
+                  <h3 class="criteria-title">Evaluation Criteria</h3>
+                  <button type="button" class="btn btn-outline-primary btn-sm" id="addCriterion">
+                    <i class="bi bi-plus"></i> Add Criterion
+                  </button>
+                </div>
+
+                <div id="criteriaList">
+                  <!-- Default Criteria Items -->
+                  <div class="criteria-item">
+                    <div class="criteria-row">
+                      <div>
+                        <label class="form-label">Criteria_Name *</label>
+                        <input type="text" class="form-control criteria-name" value="Price Competitiveness" required>
+                      </div>
+                      <div>
+                        <label class="form-label">Weight *</label>
+                        <input type="number" class="form-control criteria-weight" value="40" min="0" max="100" step="5"
+                          required>
+                      </div>
+                      <div>
+                        <label class="form-label">Price</label>
+                        <input type="text" class="form-control criteria-price" placeholder="$500K - $750K">
+                      </div>
+                      <div>
+                        <label class="form-label">Delivery_Time</label>
+                        <input type="text" class="form-control criteria-delivery" placeholder="8-12 weeks">
+                      </div>
+                      <div>
+                        <button type="button" class="btn btn-outline-danger btn-sm mt-4 remove-criterion">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="form-group mt-2">
+                      <label class="form-label">Criteria_Description</label>
+                      <textarea class="form-control form-textarea criteria-description"
+                        rows="2">Evaluation of proposed price against project budget and market rates</textarea>
+                    </div>
+                  </div>
+
+                  <div class="criteria-item">
+                    <div class="criteria-row">
+                      <div>
+                        <label class="form-label">Criteria_Name *</label>
+                        <input type="text" class="form-control criteria-name" value="Technical Capability" required>
+                      </div>
+                      <div>
+                        <label class="form-label">Weight *</label>
+                        <input type="number" class="form-control criteria-weight" value="30" min="0" max="100" step="5"
+                          required>
+                      </div>
+                      <div>
+                        <label class="form-label">Price</label>
+                        <input type="text" class="form-control criteria-price" placeholder="Equipment quality">
+                      </div>
+                      <div>
+                        <label class="form-label">Delivery_Time</label>
+                        <input type="text" class="form-control criteria-delivery" placeholder="Implementation timeline">
+                      </div>
+                      <div>
+                        <button type="button" class="btn btn-outline-danger btn-sm mt-4 remove-criterion">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="form-group mt-2">
+                      <label class="form-label">Criteria_Description</label>
+                      <textarea class="form-control form-textarea criteria-description"
+                        rows="2">Assessment of technical expertise, equipment capabilities, and relevant experience</textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="total-weight">
+                  Total Weight: <span id="totalWeight">70</span>%
+                </div>
+              </div>
+
+              <div class="alert alert-info">
+                <i class="bi bi-info-circle me-2"></i>
+                <strong>Note:</strong> All criteria weights must total 100%. The system will automatically calculate bid
+                scores based on these criteria.
+              </div>
+            </div>
+
+            <!-- Step 3: Review & Submit -->
+            <div class="form-section" id="step3">
+              <div class="section-header">
+                <h2 class="section-title">
+                  <i class="bi bi-eye"></i>
+                  Review & Submit
+                </h2>
+                <p class="section-description">Review all information before publishing your tender</p>
+              </div>
+
+              <!-- TENDERS Entity Preview -->
+              <div class="preview-card">
+                <div class="preview-header">
+                  <h3 class="preview-title">TENDERS Entity Data</h3>
+                </div>
+                <div class="preview-content">
+                  <div class="preview-row">
+                    <span class="preview-label">Tender_Title:</span>
+                    <span class="preview-value" id="previewTitle">-</span>
+                  </div>
+                  <div class="preview-row">
+                    <span class="preview-label">Tender_Subject:</span>
+                    <span class="preview-value" id="previewSubject">-</span>
+                  </div>
+                  <div class="preview-row">
+                    <span class="preview-label">Tender_Description:</span>
+                    <span class="preview-value" id="previewDescription">-</span>
+                  </div>
+                  <div class="preview-row">
+                    <span class="preview-label">Tender_Status:</span>
+                    <span class="preview-value">Open</span>
+                  </div>
+                  <div class="preview-row">
+                    <span class="preview-label">Publish_Date:</span>
+                    <span class="preview-value" id="previewPublishDate">-</span>
+                  </div>
+                  <div class="preview-row">
+                    <span class="preview-label">Submission_Deadline:</span>
+                    <span class="preview-value" id="previewDeadline">-</span>
+                  </div>
+                  <div class="preview-row">
+                    <span class="preview-label">Award_Date:</span>
+                    <span class="preview-value" id="previewAwardDate">-</span>
+                  </div>
+                  <div class="preview-row">
+                    <span class="preview-label">Buyer_ID:</span>
+                    <span class="preview-value">SIC-001 (Saudi Industrial Co.)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CRITERIA Entity Preview -->
+              <div class="preview-card">
+                <div class="preview-header">
+                  <h3 class="preview-title">CRITERIA Entity Data</h3>
+                </div>
+                <div class="preview-content" id="previewCriteria">
+                  <!-- Criteria will be populated here -->
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="confirmAccuracy" required>
+                  <label class="form-check-label" for="confirmAccuracy">
+                    I confirm that all TENDERS and CRITERIA entity data is accurate and complete
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                  <label class="form-check-label" for="agreeTerms">
+                    I agree to publish this tender on the Wasel platform and understand it will be visible to all
+                    registered suppliers
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Navigation -->
+            <div class="form-navigation">
+              <button type="button" class="btn btn-prev" id="prevBtn" style="display: none;">
+                <i class="bi bi-arrow-left me-2"></i>Previous
+              </button>
+              <button type="button" class="btn btn-next" id="nextBtn">
+                Next<i class="bi bi-arrow-right ms-2"></i>
+              </button>
+              <button type="button" class="btn btn-submit" id="submitBtn" style="display: none;">
+                <i class="bi bi-send me-2"></i>Publish Tender
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer bg-dark text-white">
+    <div class="container">
+      <div class="row">
+        <!-- Brand Section -->
+        <div class="col-lg-4 ">
+          <h5>
+            <img src="logo.png" style="height: 90px;">
+          </h5>
+          <p>Streamlining procurement and tendering processes for manufacturing companies and suppliers worldwide with
+            transparency and efficiency.</p>
+          <div class="d-flex gap-3 mt-3">
+            <a href="#" class="text-white"><i class="bi bi-twitter fs-5"></i></a>
+            <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="#" class="text-white"><i class="bi bi-facebook fs-5"></i></a>
+          </div>
+        </div>
+
+        <!-- Platform Section -->
+        <div class="col-lg-2 col-md-4 ">
+          <h5>Platform</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white text-decoration-none">Features</a></li>
+            <li><a href="#" class="text-white text-decoration-none">How It Works</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Pricing</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Case Studies</a></li>
+          </ul>
+        </div>
+
+        <!-- About Us Section -->
+        <div class="col-lg-3 col-md-4 ">
+          <h5>About Us</h5>
+          <p>Wasel is dedicated to empowering businesses with a unified digital procurement platform. Our mission is to
+            bring transparency, fairness, and efficiency to supplier relationships worldwide.</p>
+        </div>
+
+        <!-- Contact Us Section -->
+        <div class="col-lg-3 col-md-4 ">
+          <h5>Contact Us</h5>
+          <ul class="list-unstyled">
+            <li><i class="bi bi-geo-alt-fill me-2"></i> 123 Industrial City, Jubail, Saudi Arabia</li>
+            <li><i class="bi bi-telephone-fill me-2"></i> +966 500 000 000</li>
+            <li><i class="bi bi-envelope-fill me-2"></i> support@wasel.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom text-center ">
+        <p>&copy; 2025 Wasel. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let currentStep = 1;
+      const totalSteps = 3;
+
+      // Initialize date fields
+      const today = new Date().toISOString().split('T')[0];
+      const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+      const nextMonth = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+      document.getElementById('publishDate').value = today;
+      document.getElementById('submissionDeadline').value = nextWeek + 'T23:59';
+      document.getElementById('awardDate').value = nextMonth;
+
+      // Navigation functions
+      function updateNavigation() {
+        document.getElementById('prevBtn').style.display = currentStep > 1 ? 'block' : 'none';
+        document.getElementById('nextBtn').style.display = currentStep < totalSteps ? 'block' : 'none';
+        document.getElementById('submitBtn').style.display = currentStep === totalSteps ? 'block' : 'none';
+
+        // Update steps
+        document.querySelectorAll('.step').forEach((step, index) => {
+          const stepNum = index + 1;
+          step.classList.remove('active', 'completed');
+          if (stepNum === currentStep) {
+            step.classList.add('active');
+          } else if (stepNum < currentStep) {
+            step.classList.add('completed');
+          }
+        });
+
+        // Update form sections
+        document.querySelectorAll('.form-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        document.getElementById(`step${currentStep}`).classList.add('active');
+
+        // Update preview on step 3
+        if (currentStep === 3) {
+          updatePreview();
+        }
+      }
+
+      function nextStep() {
+        if (validateStep(currentStep)) {
+          currentStep++;
+          updateNavigation();
+        }
+      }
+
+      function prevStep() {
+        currentStep--;
+        updateNavigation();
+      }
+
+      function validateStep(step) {
+        switch (step) {
+          case 1:
+            const title = document.getElementById('tenderTitle').value;
+            const subject = document.getElementById('tenderSubject').value;
+            const description = document.getElementById('tenderDescription').value;
+
+            if (!title || !subject || !description) {
+              alert('Please fill in all required TENDERS entity fields');
+              return false;
+            }
+            break;
+          case 2:
+            const totalWeight = parseInt(document.getElementById('totalWeight').textContent);
+            if (totalWeight !== 100) {
+              alert('Total CRITERIA entity weights must equal 100%');
+              return false;
+            }
+
+            // Validate individual criteria
+            const criteriaNames = document.querySelectorAll('.criteria-name');
+            for (let name of criteriaNames) {
+              if (!name.value.trim()) {
+                alert('All CRITERIA entities must have a Criteria_Name');
+                return false;
+              }
+            }
+            break;
+        }
+        return true;
+      }
+
+      // Update preview data
+      function updatePreview() {
+        // TENDERS Entity preview
+        document.getElementById('previewTitle').textContent = document.getElementById('tenderTitle').value || '-';
+        document.getElementById('previewSubject').textContent = document.getElementById('tenderSubject').value || '-';
+        document.getElementById('previewDescription').textContent = document.getElementById('tenderDescription').value.substring(0, 100) + '...' || '-';
+        document.getElementById('previewPublishDate').textContent = document.getElementById('publishDate').value || '-';
+        document.getElementById('previewDeadline').textContent = document.getElementById('submissionDeadline').value || '-';
+        document.getElementById('previewAwardDate').textContent = document.getElementById('awardDate').value || '-';
+
+        // CRITERIA Entity preview
+        const criteriaPreview = document.getElementById('previewCriteria');
+        criteriaPreview.innerHTML = '';
+
+        document.querySelectorAll('.criteria-item').forEach((item, index) => {
+          const name = item.querySelector('.criteria-name').value;
+          const weight = item.querySelector('.criteria-weight').value;
+          const price = item.querySelector('.criteria-price').value;
+          const delivery = item.querySelector('.criteria-delivery').value;
+          const description = item.querySelector('.criteria-description').value;
+
+          const criteriaCard = document.createElement('div');
+          criteriaCard.className = 'mb-3 p-3 border rounded';
+          criteriaCard.innerHTML = `
+                    <div class="preview-row">
+                        <span class="preview-label">Criteria_Num:</span>
+                        <span class="preview-value">CR-${String(index + 1).padStart(3, '0')}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Criteria_Name:</span>
+                        <span class="preview-value">${name}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Weight:</span>
+                        <span class="preview-value">${weight}%</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Price:</span>
+                        <span class="preview-value">${price || '-'}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Delivery_Time:</span>
+                        <span class="preview-value">${delivery || '-'}</span>
+                    </div>
+                    <div class="preview-row">
+                        <span class="preview-label">Criteria_Description:</span>
+                        <span class="preview-value">${description.substring(0, 80)}...</span>
+                    </div>
+                `;
+          criteriaPreview.appendChild(criteriaCard);
+        });
+      }
+
+      // Criteria management
+      document.getElementById('addCriterion').addEventListener('click', function () {
+        const criteriaList = document.getElementById('criteriaList');
+        const newCriterion = document.createElement('div');
+        newCriterion.className = 'criteria-item';
+        newCriterion.innerHTML = `
+                <div class="criteria-row">
+                    <div>
+                        <label class="form-label">Criteria_Name *</label>
+                        <input type="text" class="form-control criteria-name" placeholder="e.g., Quality Assurance" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Weight *</label>
+                        <input type="number" class="form-control criteria-weight" value="10" min="0" max="100" step="5" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Price</label>
+                        <input type="text" class="form-control criteria-price" placeholder="Cost parameter">
+                    </div>
+                    <div>
+                        <label class="form-label">Delivery_Time</label>
+                        <input type="text" class="form-control criteria-delivery" placeholder="Timeline parameter">
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-danger btn-sm mt-4 remove-criterion">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <label class="form-label">Criteria_Description</label>
+                    <textarea class="form-control form-textarea criteria-description" rows="2" placeholder="Describe how this criterion will be evaluated"></textarea>
+                </div>
+            `;
+        criteriaList.appendChild(newCriterion);
+        updateTotalWeight();
+      });
+
+      // Remove criterion
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('.remove-criterion')) {
+          e.target.closest('.criteria-item').remove();
+          updateTotalWeight();
+        }
+      });
+
+      // Update total weight
+      function updateTotalWeight() {
+        let total = 0;
+        document.querySelectorAll('.criteria-weight').forEach(input => {
+          total += parseInt(input.value) || 0;
+        });
+        document.getElementById('totalWeight').textContent = total;
+      }
+
+      document.addEventListener('input', function (e) {
+        if (e.target.classList.contains('criteria-weight')) {
+          updateTotalWeight();
+        }
+      });
+
+      // Form submission
+      document.getElementById('submitBtn').addEventListener('click', function () {
+        if (document.getElementById('confirmAccuracy').checked && document.getElementById('agreeTerms').checked) {
+          // Collect TENDERS entity data
+          const tenderData = {
+            // TENDERS Entity
+            tenderTitle: document.getElementById('tenderTitle').value,
+            tenderSubject: document.getElementById('tenderSubject').value,
+            tenderDescription: document.getElementById('tenderDescription').value,
+            tenderStatus: 'Open', // Auto-set
+            publishDate: document.getElementById('publishDate').value,
+            submissionDeadline: document.getElementById('submissionDeadline').value,
+            awardDate: document.getElementById('awardDate').value,
+            buyerId: 'SIC-001', // From logged-in user session
+
+            // Technical specifications
+            technicalSpecs: document.getElementById('technicalSpecs').value
+          };
+
+          // Collect CRITERIA entity data
+          const criteriaData = Array.from(document.querySelectorAll('.criteria-item')).map((item, index) => ({
+            criteriaNum: `CR-${String(index + 1).padStart(3, '0')}`,
+            criteriaName: item.querySelector('.criteria-name').value,
+            criteriaDescription: item.querySelector('.criteria-description').value,
+            weight: parseInt(item.querySelector('.criteria-weight').value),
+            price: item.querySelector('.criteria-price').value,
+            deliveryTime: item.querySelector('.criteria-delivery').value,
+            tenderId: 'T-' + Date.now() // Would be the actual Tender_ID after creation
+          }));
+
+          console.log('TENDERS Entity:', tenderData);
+          console.log('CRITERIA Entities:', criteriaData);
+
+          // Show success message
+          alert('🎉 Your tender has been published successfully!\n\nTENDERS and CRITERIA entities created. Suppliers can now view and submit bids.');
+
+          // Redirect to tenders page
+          setTimeout(() => {
+            window.location.href = 'tenders.html';
+          }, 2000);
+        } else {
+          alert('Please confirm the accuracy of TENDERS and CRITERIA entity data before submitting.');
+        }
+      });
+
+      // Event listeners
+      document.getElementById('nextBtn').addEventListener('click', nextStep);
+      document.getElementById('prevBtn').addEventListener('click', prevStep);
+
+      // Initialize
+      updateNavigation();
+      updateTotalWeight();
+    });
+  </script>
+</body>
+
+</html>
