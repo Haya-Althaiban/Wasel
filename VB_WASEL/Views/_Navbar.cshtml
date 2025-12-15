@@ -1,0 +1,44 @@
+﻿<nav class="navbar navbar-expand-lg p-0 fixed-top mb-4">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center gap-2" asp-controller="Home" asp-action="Index">
+            <img src="~/logo.png" style="height: 90px;" alt="Wasel Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-center gap-3">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-house me-1"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">
+                        <i class="bi bi-grid me-1"></i> Features
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#how-it-works">
+                        <i class="bi bi-play-circle me-1"></i> How It Works
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-chat-quote me-1"></i> Browse Tenders
+                    </a>
+                </li>
+                <li class="nav-item ms-2">
+                    <a class="btn btn-outline-primary btn-sm" asp-controller="Auth" asp-action="Login">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary btn-sm ms-2" asp-controller="Auth" asp-action="Register">
+                        <i class="bi bi-person-plus me-1"></i> Get Started
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

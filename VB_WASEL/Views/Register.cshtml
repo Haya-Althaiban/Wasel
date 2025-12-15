@@ -1,0 +1,261 @@
+﻿@model Wasel.ViewModels.AuthVMs.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="register-section">
+    <div class="container register-container">
+        <div class="row g-0 justify-content-center">
+            <div class="col-lg-8 register-form-container register-card">
+                <div class="form-header">
+                    <h2>Create Your Account</h2>
+                    <p>Join thousands of companies and suppliers using Wasel</p>
+                </div>
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Please check the form below for errors
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                <form method="post" asp-controller="Auth" asp-action="Register">
+                    @Html.AntiForgeryToken()
+
+                    <!-- User Type Selection -->
+                    <div class="form-group mb-3">
+                        <label asp-for="UserType" class="form-label">Account Type *</label>
+                        <select asp-for="UserType" class="form-control" id="userType">
+                            <option value="">Select Type</option>
+                            <option value="buyer">Buyer (I want to create tenders)</option>
+                            <option value="seller">Seller (I want to bid on tenders)</option>
+                            <option value="both">Both (I want to create tenders and bid)</option>
+                        </select>
+                        <span asp-validation-for="UserType" class="text-danger"></span>
+                    </div>
+
+                    <!-- USER Entity Fields -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name" class="form-label">Full Name *</label>
+                                <input asp-for="Name" class="form-control" placeholder="Enter your full name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Phone" class="form-label">Phone Number *</label>
+                                <input asp-for="Phone" class="form-control" placeholder="+966 500 000 000" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email" class="form-label">Email Address *</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input asp-for="Email" class="form-control" placeholder="your.email@example.com" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- BUYER Fields (Hidden initially) -->
+                    <div id="buyerFields" style="display: none;">
+                        <div class="section-header">
+                            <h5><i class="bi bi-building me-2"></i>Buyer Information</h5>
+                            <p class="text-muted">Company details for tender creation</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="BuyerName" class="form-label">Company Name *</label>
+                                    <input asp-for="BuyerName" class="form-control" />
+                                    <span asp-validation-for="BuyerName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ContactPhone" class="form-label">Company Phone *</label>
+                                    <input asp-for="ContactPhone" class="form-control" />
+                                    <span asp-validation-for="ContactPhone" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="BuyerCity" class="form-label">City *</label>
+                                    <select asp-for="BuyerCity" class="form-control">
+                                        <option value="">Select City</option>
+                                        <option value="riyadh">Riyadh</option>
+                                        <option value="jeddah">Jeddah</option>
+                                        <option value="dammam">Dammam</option>
+                                        <option value="jubail">Jubail</option>
+                                        <option value="yanbu">Yanbu</option>
+                                        <option value="khobar">Al Khobar</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <span asp-validation-for="BuyerCity" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="BuyerAddress" class="form-label">Address *</label>
+                                    <input asp-for="BuyerAddress" class="form-control" />
+                                    <span asp-validation-for="BuyerAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SELLER Fields (Hidden initially) -->
+                    <div id="sellerFields" style="display: none;">
+                        <div class="section-header">
+                            <h5><i class="bi bi-shop me-2"></i>Seller Information</h5>
+                            <p class="text-muted">Business details for bidding on tenders</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SellerName" class="form-label">Business Name *</label>
+                                    <input asp-for="SellerName" class="form-control" />
+                                    <span asp-validation-for="SellerName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SellerPhone" class="form-label">Business Phone *</label>
+                                    <input asp-for="SellerPhone" class="form-control" />
+                                    <span asp-validation-for="SellerPhone" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SellerCity" class="form-label">City *</label>
+                                    <select asp-for="SellerCity" class="form-control">
+                                        <option value="">Select City</option>
+                                        <option value="riyadh">Riyadh</option>
+                                        <option value="jeddah">Jeddah</option>
+                                        <option value="dammam">Dammam</option>
+                                        <option value="jubail">Jubail</option>
+                                        <option value="yanbu">Yanbu</option>
+                                        <option value="khobar">Al Khobar</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <span asp-validation-for="SellerCity" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="SellerAddress" class="form-label">Business Address *</label>
+                                    <input asp-for="SellerAddress" class="form-control" />
+                                    <span asp-validation-for="SellerAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Fields -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Password" class="form-label">Password *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input asp-for="Password" class="form-control" placeholder="Enter password" />
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="PasswordConfirmation" class="form-label">Confirm Password *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                    <input asp-for="PasswordConfirmation" class="form-control" placeholder="Confirm password" />
+                                </div>
+                                <span asp-validation-for="PasswordConfirmation" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-register">
+                        <i class="bi bi-person-plus me-2"></i> Create Account
+                    </button>
+                </form>
+
+                <div class="login-link">
+                    Already have an account? <a asp-controller="Auth" asp-action="Login" class="text-decoration-none">Sign in here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <style>
+        .section-header {
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+            .section-header h5 {
+                color: #495057;
+                font-weight: 600;
+            }
+
+            .section-header p {
+                font-size: 0.875rem;
+            }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const userTypeSelect = document.getElementById('userType');
+            const buyerFields = document.getElementById('buyerFields');
+            const sellerFields = document.getElementById('sellerFields');
+
+            function toggleFields(type) {
+                buyerFields.style.display = 'none';
+                sellerFields.style.display = 'none';
+
+                if (type === 'buyer') {
+                    buyerFields.style.display = 'block';
+                } else if (type === 'seller') {
+                    sellerFields.style.display = 'block';
+                } else if (type === 'both') {
+                    buyerFields.style.display = 'block';
+                    sellerFields.style.display = 'block';
+                }
+            }
+
+            userTypeSelect.addEventListener('change', function () {
+                toggleFields(this.value);
+            });
+
+            // Initialize on page load
+            toggleFields(userTypeSelect.value);
+        });
+    </script>
+}

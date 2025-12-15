@@ -1,0 +1,220 @@
+﻿@model Wasel.ViewModels.BuyerVMs.SellerFeedbackViewModel
+@{
+    ViewData["Title"] = "Supplier Feedback - " + Model.Seller.SellerName;
+    Layout = "_LayoutDashboard";
+}
+
+@section Styles {
+    <style>
+        .rating-distribution .progress {
+            background-color: #e9ecef;
+        }
+
+        .rating-bar .count {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .rating-stars.small {
+            font-size: 0.9rem;
+        }
+
+        .rating-stars.justify-content-center {
+            display: flex;
+            justify-content: center;
+        }
+
+        .entity-avatar.large {
+            width: 60px;
+            height: 60px;
+            font-size: 1.2rem;
+        }
+
+        .contact-info .contact-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+            .contact-info .contact-item:last-child {
+                border-bottom: none;
+            }
+
+        .feedback-comment {
+            line-height: 1.6;
+            color: #495057;
+        }
+
+        .feedback-item:last-child {
+            border-bottom: none !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
+        }
+    </style>
+}
+
+<section class="dashboard-section mt-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="Buyer" asp-controller="Buyer" asp-action="Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a asp-area="Buyer" asp-controller="Feedback" asp-action="Index">Feedback</a></li>
+                        <li class="breadcrumb-item active">Supplier Feedback</li>
+                    </ol>
+                </nav>
+                <h1 class="page-title">@Model.Seller.SellerName</h1>
+                <p class="page-subtitle">Supplier feedback and ratings</p>
+            </div>
+            <a asp-area="Buyer" asp-controller="Feedback" asp-action="Index" class="btn btn-light">
+                <i class="bi bi-arrow-left me-2"></i>Back to Feedback
+            </a>
+        </div>
+
+        <!-- Supplier Overview -->
+        <div class="stats-grid">
+            <!-- Average Rating -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-title">AVERAGE RATING</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                </div>
+                <div class="stat-value">@Model.Stats.AverageRating/5</div>
+                <div class="stat-trend trend-up">
+                    <div class="rating-stars">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <i class="bi bi-star@(i <= Math.Floor(Model.Stats.AverageRating) ? "-fill" : "")"></i>
+                        }
+                    </div>
+                    <span>Supplier quality</span>
+                </div>
+            </div>
+
+            <!-- Total Reviews -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-title">TOTAL REVIEWS</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-chat-dots"></i>
+                    </div>
+                </div>
+                <div class="stat-value">@Model.Stats.TotalFeedbacks</div>
+                <div class="stat-trend trend-up">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>Customer feedback</span>
+                </div>
+            </div>
+
+            <!-- Positive Reviews -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-title">POSITIVE REVIEWS</div>
+                    <div class="stat-icon">
+                        <i class="bi bi-hand-thumbs-up"></i>
+                    </div>
+                </div>
+                <div class="stat-value">
+                    @((Model.Stats.RatingDistribution.ContainsKey(5) ? Model.Stats.RatingDistribution[5] : 0) +
+                                        (Model.Stats.RatingDistribution.ContainsKey(4) ? Model.Stats.RatingDistribution[4] : 0))
+                </div>
+                <div class="stat-trend trend-up">
+                    <i class="bi bi-arrow-up"></i>
+                    <span>4 and 5 star ratings</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Rating Distribution -->
+            <div class="col-lg-4">
+                <!-- Supplier Information -->
+                <div class="content-card">
+                    <h3 class="card-title">Seller Information</h3>
+                    <div class="supplier-details">
+                        <div class="entity-info mb-3">
+                            <div class="entity-avatar large">
+                                @(Model.Seller.SellerName?.Substring(0, Math.Min(2, Model.Seller.SellerName.Length)) ?? "NA")
+                            </div>
+                            <div>
+                                <div class="entity-title">@Model.Seller.SellerName</div>
+                                <small class="text-muted">@Model.Seller.SellerCity</small>
+                            </div>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="bi bi-envelope me-2"></i>
+                                @Model.Seller.User?.Email
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-telephone me-2"></i>
+                                @Model.Seller.ContactPhone
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-geo-alt me-2"></i>
+                                @Model.Seller.SellerAddress
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Reviews -->
+            <div class="col-lg-8">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">All Reviews (@Model.Feedbacks.Count)</h3>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.Feedbacks.Any())
+                        {
+                            <div class="feedback-list">
+                                @foreach (var feedback in Model.Feedbacks)
+                                {
+                                    <div class="feedback-item border-bottom pb-3 mb-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <div class="entity-title">@feedback.BuyerName</div>
+                                                <div class="rating-stars small">
+                                                    @for (int i = 1; i <= 5; i++)
+                                                    {
+                                                        <i class="bi bi-star@(i <= feedback.Rating ? "-fill" : "") text-warning"></i>
+                                                    }
+                                                    <span class="text-muted ms-2">@feedback.Rating/5</span>
+                                                </div>
+                                            </div>
+                                            <div class="text-muted small">
+                                                @feedback.FeedbackDate?.ToString("MMM dd, yyyy")
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <strong>Tender:</strong>
+                                            <a asp-area="Buyer" asp-controller="Tender" asp-action="Show" asp-route-id="@feedback.TenderId" class="text-decoration-none">
+                                                @feedback.TenderTitle
+                                            </a>
+                                        </div>
+
+                                        <div class="feedback-comment">
+                                            @feedback.Comment
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center py-4">
+                                <i class="bi bi-chat-square-text display-4 text-muted"></i>
+                                <p class="mt-2">No reviews yet for this supplier.</p>
+                                <p class="text-muted">Be the first to provide feedback after working with this supplier.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

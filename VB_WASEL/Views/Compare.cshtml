@@ -1,0 +1,237 @@
+﻿@model Wasel.ViewModels.BuyerVMs.BidComparisonViewModel
+@{
+    ViewData["Title"] = "Compare Bids";
+    Layout = "_LayoutDashboard";
+}
+
+<section class="dashboard-section mt-5 mb-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-area="Buyer" asp-controller="Buyer" asp-action="Dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a asp-area="Buyer" asp-controller="Tender" asp-action="Index">Tenders</a></li>
+                        <li class="breadcrumb-item"><a asp-area="Buyer" asp-controller="Tender" asp-action="Show" asp-route-id="@Model.Tender?.TenderId">@Model.Tender?.TenderTitle</a></li>
+                        <li class="breadcrumb-item"><a asp-area="Buyer" asp-controller="Bid" asp-action="Show" asp-route-id="@Model.Tender?.TenderId">Bids</a></li>
+                        <li class="breadcrumb-item active">Compare</li>
+                    </ol>
+                </nav>
+                <h1 class="page-title">Compare Bids - @Model.Tender?.TenderTitle</h1>
+                <p class="page-subtitle">Compare and evaluate all submitted bids</p>
+            </div>
+            <a asp-area="Buyer" asp-controller="Bid" asp-action="Show" asp-route-id="@Model.Tender?.TenderId" class="btn btn-light">
+                <i class="bi bi-arrow-left me-2"></i>Back to Bids
+            </a>
+        </div>
+
+        @if (Model.BidComparisons.Any())
+        {
+            <div class="content-card">
+                <div class="table-responsive">
+                    <table class="data-table comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Criteria</th>
+                                <th>Weight</th>
+                                @foreach (var bid in Model.BidComparisons)
+                                {
+                                    <th>
+                                        <div class="text-center">
+                                            <div class="entity-title">@bid.SellerName</div>
+                                            <small class="text-muted">SAR @bid.ProposedPrice.ToString("N2")</small>
+                                            <br>
+                                            <span class="badge bg-@(bid.CalculatedScore >= 80 ? "success" : (bid.CalculatedScore >= 60 ? "warning" : "danger"))">
+                                                @bid.CalculatedScore/100
+                                            </span>
+                                        </div>
+                                    </th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var criterion in Model.Criteria ?? new List<Wasel.Models.Criterion>())
+                            {
+                                <tr>
+                                    <td>
+                                        <strong>@criterion.CriteriaName</strong>
+                                        @if (!string.IsNullOrEmpty(criterion.CriteriaDescription))
+                                        {
+                                            <br>
+                                            <small class="text-muted">@criterion.CriteriaDescription</small>
+                                        }
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-primary">@criterion.Weight%</span>
+                                    </td>
+                                    @foreach (var bid in Model.BidComparisons)
+                                    {
+                                        <td class="text-center">
+                                            @if (bid.CriteriaScores.ContainsKey(criterion.CriteriaName ?? ""))
+                                            {
+                                                var score = bid.CriteriaScores[criterion.CriteriaName ?? ""];
+                                                <span class="badge bg-@(score.Score >= 80 ? "success" : (score.Score >= 60 ? "warning" : "danger"))">
+                                                    @score.Score
+                                                </span>
+                                                <br>
+                                                <small class="text-muted">
+                                                    (@((score.Score * (double)criterion.Weight / 100).ToString("N1")) pts)
+                                                </small>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            }
+
+                            <!-- Total Scores -->
+
+                            <tr class="total-row">
+                                <td><strong>Total Score</strong></td>
+                                <td><strong>100%</strong></td>
+                                @foreach (var bid in Model.BidComparisons)
+                                {
+                                    <td class="text-center">
+                                        <strong class="text-@(bid.CalculatedScore >= 80 ? "success" : (bid.CalculatedScore >= 60 ? "warning" : "danger"))">
+                                            @bid.CalculatedScore/100
+                                        </strong>
+                                    </td>
+                                }
+                            </tr>
+
+                            <!-- Actions -->
+                            <tr>
+                                <td><strong>Actions</strong></td>
+                                <td></td>
+                                @foreach (var bid in Model.BidComparisons)
+                                {
+                                    <td class="text-center">
+                                        @if (Model.Tender?.TenderStatus == "Open")
+                                        {
+                                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#approveModal@(bid.BidId)">
+                                                <i class="bi bi-check-lg me-1"></i>Approve
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Closed</span>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card @(Model.BidComparisons.OrderByDescending(b => b.CalculatedScore).First().CalculatedScore >= 80 ? "border-success" : "border-warning")">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-@(Model.BidComparisons.OrderByDescending(b => b.CalculatedScore).First().CalculatedScore >= 80 ? "success" : "warning")">
+                                @Model.BidComparisons.OrderByDescending(b => b.CalculatedScore).First().SellerName
+                            </h5>
+                            <p class="card-text">Highest Score</p>
+                            <h3 class="text-@(Model.BidComparisons.OrderByDescending(b => b.CalculatedScore).First().CalculatedScore >= 80 ? "success" : "warning")">
+                                @Model.BidComparisons.OrderByDescending(b => b.CalculatedScore).First().CalculatedScore/100
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-primary">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-primary">
+                                SAR @Model.BidComparisons.Min(b => b.ProposedPrice).ToString("N2")
+                            </h5>
+                            <p class="card-text">Lowest Price</p>
+                            <h3 class="text-primary">
+                                @Model.BidComparisons.First(b => b.ProposedPrice == Model.BidComparisons.Min(bid => bid.ProposedPrice)).SellerName
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card border-info">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-info">
+                                SAR @Model.BidComparisons.Average(b => b.ProposedPrice).ToString("N2")
+                            </h5>
+                            <p class="card-text">Average Price</p>
+                            <h3 class="text-info">
+                                Market Average
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Approve Modals -->
+            @foreach (var bid in Model.BidComparisons)
+            {
+                <div class="modal fade" id="approveModal@(bid.BidId)" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Approve Bid - @bid.SellerName</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form asp-area="Buyer" asp-controller="Bid" asp-action="Approve" method="POST">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="BidId" value="@bid.BidId" />
+                                <input type="hidden" name="TenderId" value="@Model.Tender?.TenderId" />
+                                <div class="modal-body">
+                                    <p>Approve this bid with score <strong>@bid.CalculatedScore/100</strong>?</p>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Contract Value *</label>
+                                        <input type="number" class="form-control" name="ContractValue" value="@bid.ProposedPrice" step="0.01" min="0" required>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Start Date *</label>
+                                            <input type="date" class="form-control" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">End Date *</label>
+                                            <input type="date" class="form-control" name="EndDate" value="@DateTime.Now.AddMonths(6).ToString("yyyy-MM-dd")" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Payment Terms *</label>
+                                        <input type="text" class="form-control" name="PaymentTerms" value="30 days after delivery" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Delivery Schedule *</label>
+                                        <input type="text" class="form-control" name="DeliverySchedule" value="@bid.ProposedTimeline" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Approve & Create Contract</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="content-card">
+                <div class="text-center py-4">
+                    <i class="bi bi-inbox display-4 text-muted"></i>
+                    <p class="mt-2">No bids received for this tender yet.</p>
+                    <a asp-area="Buyer" asp-controller="Tender" asp-action="Show" asp-route-id="@Model.Tender?.TenderId" class="btn btn-primary">Back to Tender</a>
+                </div>
+            </div>
+        }
+    </div>
+</section>

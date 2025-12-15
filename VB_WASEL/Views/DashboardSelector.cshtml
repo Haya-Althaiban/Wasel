@@ -1,0 +1,138 @@
+﻿@model Wasel.ViewModels.AuthVMs.DashboardSelectorViewModel
+@{
+    ViewData["Title"] = "Choose Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="dashboard-selector-section mb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-sm">
+                    <div style="background: linear-gradient(135deg, var(--brand-dark), var(--brand-accent));"
+                         class="card-header text-center bg-custpm text-white py-3">
+                        <h3 class="mb-0"><i class="bi bi-layout-split me-2"></i>Choose Your Dashboard</h3>
+                    </div>
+                    <div class="card-body p-5">
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <div class="text-center mb-5">
+                            <h4 class="text-primary">Welcome, @Model.UserName!</h4>
+                            <p class="lead text-muted">You have both buyer and seller accounts. Please choose which dashboard you'd like to access.</p>
+                        </div>
+
+                        <div class="row g-4">
+                            <!-- Buyer Dashboard Option -->
+                            <div class="col-md-6">
+                                <div class="dashboard-option card h-100 border-primary hover-shadow">
+                                    <div class="card-body text-center p-4">
+                                        <div class="dashboard-icon mb-3">
+                                            <i class="bi bi-building display-4 text-primary"></i>
+                                        </div>
+                                        <h4 class="card-title text-primary">Buyer</h4>
+                                        <p class="card-text text-muted">Create and manage tenders, review bids, and award contracts.</p>
+                                        <ul class="list-unstyled text-start mt-4">
+                                            <li class="mb-2"><i class="bi bi-plus-circle text-success me-2"></i>Create new tenders</li>
+                                            <li class="mb-2"><i class="bi bi-inbox text-success me-2"></i>Review bid proposals</li>
+                                            <li class="mb-2"><i class="bi bi-file-text text-success me-2"></i>Manage contracts</li>
+                                            <li class="mb-2"><i class="bi bi-credit-card text-success me-2"></i>Track payments</li>
+                                            <li class="mb-2"><i class="bi bi-chat-text text-success me-2"></i>Communicate with sellers</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-top-0 py-3">
+                                        <form method="post" asp-controller="Auth" asp-action="SwitchDashboard">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="dashboardType" value="buyer">
+                                            <button type="submit" class="btn btn-primary btn-lg w-100 py-3">
+                                                <i class="bi bi-arrow-right-circle me-2"></i>Continue As Buyer
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seller Dashboard Option -->
+                            <div class="col-md-6">
+                                <div class="dashboard-option card h-100 border-success hover-shadow">
+                                    <div class="card-body text-center p-4">
+                                        <div class="dashboard-icon mb-3">
+                                            <i class="bi bi-shop display-4 text-success"></i>
+                                        </div>
+                                        <h4 class="card-title text-success">Seller</h4>
+                                        <p class="card-text text-muted">Find tenders, submit bids, manage contracts, and receive payments.</p>
+                                        <ul class="list-unstyled text-start mt-4">
+                                            <li class="mb-2"><i class="bi bi-search text-success me-2"></i>Browse available tenders</li>
+                                            <li class="mb-2"><i class="bi bi-pencil-square text-success me-2"></i>Submit bid proposals</li>
+                                            <li class="mb-2"><i class="bi bi-award text-success me-2"></i>Manage awarded contracts</li>
+                                            <li class="mb-2"><i class="bi bi-wallet2 text-success me-2"></i>Track payments & invoices</li>
+                                            <li class="mb-2"><i class="bi bi-star text-success me-2"></i>Receive buyer feedback</li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-top-0 py-3">
+                                        <form method="post" asp-controller="Auth" asp-action="SwitchDashboard">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="dashboardType" value="seller">
+                                            <button type="submit" class="btn btn-success btn-lg w-100 py-3">
+                                                <i class="bi bi-arrow-right-circle me-2"></i>Continue As Seller
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <strong>Flexible Access:</strong> You can switch between dashboards anytime from your profile menu in the navigation bar.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <style>
+        .dashboard-selector-section {
+            margin-top: 140px !important;
+        }
+
+        .dashboard-option {
+            transition: all 0.3s ease;
+            border-width: 2px;
+        }
+
+            .dashboard-option:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            }
+
+        .hover-shadow {
+            transition: all 0.3s ease;
+        }
+
+            .hover-shadow:hover {
+                box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            }
+
+        .dashboard-icon {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 50%;
+            width: 100px;
+            margin: 0 auto 1.5rem;
+        }
+    </style>
+}

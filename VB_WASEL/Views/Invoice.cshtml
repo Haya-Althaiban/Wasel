@@ -1,0 +1,356 @@
+﻿@model Wasel.ViewModels.SellerVMs.PaymentVMs.PaymentInvoiceViewModel
+@{
+    ViewData["Title"] = "Payment Invoice";
+    Layout = "_LayoutDashboard";
+}
+
+<section class="dashboard-section mt-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="page-title">Payment Invoice</h1>
+                <p class="page-subtitle">Invoice for Payment #PY-@Model.PaymentNum</p>
+            </div>
+            <div>
+                <a href="@Url.Action("Index", "Payment", new { area = "Seller" })" class="btn btn-outline-secondary me-2">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Payments
+                </a>
+                <button onclick="window.print()" class="btn btn-primary">
+                    <i class="bi bi-printer me-2"></i>Print Invoice
+                </button>
+            </div>
+        </div>
+
+        <!-- Invoice Card -->
+        <div class="content-card printable-area">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-title">
+                            <i class="bi bi-receipt me-2"></i>
+                            INVOICE
+                        </h3>
+                        <p class="text-muted mb-0">#INV-@Model.InvoiceNum</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="invoice-status">
+                            @{
+                                var statusClass = Model.PaymentStatus switch
+                                {
+                                    "Completed" => "success",
+                                    "Pending" => "warning",
+                                    "Failed" => "danger",
+                                    "Refunded" => "info",
+                                    _ => "secondary"
+                                };
+                            }
+                            <span class="status-badge status-@statusClass">@Model.PaymentStatus</span>
+                        </div>
+                        <p class="text-muted mb-0">
+                            Issued: @(Model.InvoiceDate?.ToString("MMMM dd, yyyy") ?? Model.PaymentDate?.ToString("MMMM dd, yyyy") ?? "N/A")
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <!-- Company & Seller Info -->
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <div class="company-info">
+                            <h5 class="fw-bold">Wasel Platform</h5>
+                            <p class="mb-1">Tender Management System</p>
+                            <p class="mb-1">Riyadh, Saudi Arabia</p>
+                            <p class="mb-0">support@wasel.com</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="seller-info">
+                            <h5 class="fw-bold">Bill To:</h5>
+                            <p class="mb-1">@Model.SellerName</p>
+                            <p class="mb-1">@(Model.SellerCity ?? "N/A")</p>
+                            <p class="mb-1">@(Model.SellerAddress ?? "N/A")</p>
+                            <p class="mb-0">@(Model.SellerPhone ?? "N/A")</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="invoice-details-section">
+                            <h6 class="section-title">Payment Details</h6>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="detail-item">
+                                        <label>Payment Number:</label>
+                                        <span>#PY-@Model.PaymentNum</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="detail-item">
+                                        <label>Payment Date:</label>
+                                        <span>@(Model.PaymentDate?.ToString("MMMM dd, yyyy") ?? "N/A")</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="detail-item">
+                                        <label>Contract ID:</label>
+                                        <span>#CT-@Model.ContractId</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="detail-item">
+                                        <label>Tender ID:</label>
+                                        <span>#T-@Model.ContractId</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Buyer Information -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="buyer-info-section">
+                            <h6 class="section-title">Client Information</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <strong>Buyer Name:</strong>
+                                    <p class="mb-1">@Model.BuyerName</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Contact Phone:</strong>
+                                    <p class="mb-1">@(Model.BuyerPhone ?? "N/A")</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Location:</strong>
+                                    <p class="mb-1">@(Model.BuyerCity ?? "N/A")</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items Table -->
+                <div class="table-responsive mb-4">
+                    <table class="table invoice-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th class="text-end">Amount</th>
+                                <th class="text-end">Commission</th>
+                                <th class="text-end">Net Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong>Payment for Contract #CT-@Model.ContractId</strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        Tender: @Model.TenderTitle
+                                    </small>
+                                    <br>
+                                    <small class="text-muted">
+                                        Contract Value: SAR @Model.ContractValue.ToString("N2")
+                                    </small>
+                                </td>
+                                <td class="text-end">SAR @Model.Amount.ToString("N2")</td>
+                                <td class="text-end text-danger">-SAR @Model.SellerCommission.ToString("N2")</td>
+                                <td class="text-end text-success">SAR @Model.NetAmount.ToString("N2")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Totals -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="payment-notes">
+                            <h6>Payment Notes:</h6>
+                            <p class="text-muted small">
+                                • This payment represents the net amount after platform commission<br>
+                                • Commission rate: @(Model.Amount > 0 ? ((Model.SellerCommission / Model.Amount) * 100).ToString("N1") : "0")%<br>
+                                • Payment status: @Model.PaymentStatus<br>
+                                • For any inquiries, contact Wasel support
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="totals-section">
+                            <table class="table totals-table">
+                                <tr>
+                                    <td><strong>Gross Amount:</strong></td>
+                                    <td class="text-end">SAR @Model.Amount.ToString("N2")</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Platform Commission:</strong></td>
+                                    <td class="text-end text-danger">-SAR @Model.SellerCommission.ToString("N2")</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td><strong>Net Amount Received:</strong></td>
+                                    <td class="text-end text-success"><strong>SAR @Model.NetAmount.ToString("N2")</strong></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="invoice-footer mt-5 pt-4 border-top">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Thank you for your business!</h6>
+                            <p class="text-muted small mb-0">
+                                We appreciate your trust in Wasel platform.
+                            </p>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <div class="stamp">
+                                <div class="stamp-content">
+                                    <small>WASEL PLATFORM</small>
+                                    <br>
+                                    <small>OFFICIAL INVOICE</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <style>
+        .printable-area {
+            background: white;
+            border: 1px solid #dee2e6;
+        }
+
+        @@media print {
+            .dashboard-section {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .btn, .page-subtitle {
+                display: none !important;
+            }
+
+            .printable-area {
+                border: none !important;
+                box-shadow: none !important;
+            }
+        }
+
+        .section-title {
+            color: #495057;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .detail-item {
+            margin-bottom: 0.5rem;
+        }
+
+            .detail-item label {
+                font-weight: 600;
+                color: #6c757d;
+                margin-bottom: 0;
+                min-width: 120px;
+                display: inline-block;
+            }
+
+        .invoice-table {
+            background: #f8f9fa;
+        }
+
+            .invoice-table th {
+                background: #e9ecef;
+                border-bottom: 2px solid #dee2e6;
+                font-weight: 600;
+            }
+
+        .totals-table {
+            width: 100%;
+        }
+
+            .totals-table td {
+                padding: 0.75rem;
+                border: none;
+            }
+
+        .total-row {
+            border-top: 2px solid #dee2e6 !important;
+            background: #f8f9fa;
+        }
+
+            .total-row td {
+                font-size: 1.1rem;
+            }
+
+        .stamp {
+            display: inline-block;
+            padding: 1rem;
+            border: 2px dashed #dc3545;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+
+        .stamp-content {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .company-info, .seller-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.375rem;
+        }
+
+        .invoice-details-section, .buyer-info-section {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.375rem;
+        }
+
+        .payment-notes {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            border-left: 4px solid #ffc107;
+        }
+
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+            .status-badge.status-success {
+                background: #d1e7dd;
+                color: #0f5132;
+            }
+
+            .status-badge.status-warning {
+                background: #fff3cd;
+                color: #664d03;
+            }
+
+            .status-badge.status-danger {
+                background: #f8d7da;
+                color: #721c24;
+            }
+
+            .status-badge.status-info {
+                background: #cff4fc;
+                color: #055160;
+            }
+    </style>
+}

@@ -1,0 +1,409 @@
+﻿@model Wasel.ViewModels.SellerVMs.ContractVMs.ContractReviewViewModel
+@{
+    ViewData["Title"] = "Contract Review";
+    Layout = "_LayoutDashboard";
+}
+
+<section class="dashboard-section mt-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="page-title">Contract Review</h1>
+                <p class="page-subtitle">Contract #CT-@Model.ContractId</p>
+            </div>
+            <a href="@Url.Action("Index", "Contract", new { area = "Seller" })" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i>Back to Contracts
+            </a>
+        </div>
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        <div class="row">
+            <!-- Contract Details -->
+            <div class="col-lg-8">
+                <div class="content-card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="bi bi-file-text me-2"></i>
+                            Contract Details
+                        </h3>
+                        @{
+                            var statusClass = Model.Status switch
+                            {
+                                "Active" => "success",
+                                "Pending" => "warning",
+                                "Completed" => "info",
+                                "Rejected" => "danger",
+                                _ => "secondary"
+                            };
+                        }
+                        <span class="status-badge status-@statusClass">@Model.Status</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-item">
+                                    <label>Contract Value:</label>
+                                    <span class="value">SAR @Model.ContractValue.ToString("N2")</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Start Date:</label>
+                                    <span class="value">@(Model.StartDate?.ToString("MMMM dd, yyyy") ?? "N/A")</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Payment Terms:</label>
+                                    <span class="value">@(Model.PaymentTerms ?? "Not specified")</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item">
+                                    <label>End Date:</label>
+                                    <span class="value">@(Model.EndDate?.ToString("MMMM dd, yyyy") ?? "N/A")</span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Duration:</label>
+                                    <span class="value">
+                                        @if (Model.StartDate.HasValue && Model.EndDate.HasValue)
+                                        {
+                                            var duration = (Model.EndDate.Value.ToDateTime(TimeOnly.MinValue) - Model.StartDate.Value.ToDateTime(TimeOnly.MinValue)).Days;
+                                            <text>@duration days</text>
+                                        }
+                                        else
+                                        {
+                                            <text>N/A</text>
+                                        }
+                                    </span>
+                                </div>
+                                <div class="detail-item">
+                                    <label>Delivery Schedule:</label>
+                                    <span class="value">@(Model.DeliverySchedule ?? "Not specified")</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.ContractDocumentUrl))
+                        {
+                            <div class="mt-3">
+                                <a href="@Model.ContractDocumentUrl"
+                                   target="_blank"
+                                   class="btn btn-outline-primary">
+                                    <i class="bi bi-download me-2"></i>Download Contract Document
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Tender Information -->
+                <div class="content-card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="bi bi-megaphone me-2"></i>
+                            Tender Information
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="detail-item">
+                            <label>Tender Title:</label>
+                            <span class="value">@Model.TenderTitle</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Description:</label>
+                            <span class="value">@Model.TenderDescription</span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-item">
+                                    <label>Original Budget:</label>
+                                    <span class="value">SAR @Model.ContractValue.ToString("N2")</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item">
+                                    <label>Your Proposed Price:</label>
+                                    <span class="value">SAR @Model.ContractValue.ToString("N2")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bid Details -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="bi bi-pencil-square me-2"></i>
+                            Your Bid Proposal
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="detail-item">
+                            <label>Proposed Timeline:</label>
+                            <span class="value">@Model.DeliverySchedule</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Bid Description:</label>
+                            <span class="value">@Model.TenderDescription</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Submission Date:</label>
+                            <span class="value">@(Model.StartDate?.ToString("MMMM dd, yyyy") ?? "N/A")</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Actions -->
+            <div class="col-lg-4">
+                <!-- Buyer Information -->
+                <div class="content-card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="bi bi-building me-2"></i>
+                            Buyer Information
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="entity-info">
+                            <div class="entity-title">@Model.BuyerName</div>
+                            <div class="entity-details">
+                                <div class="detail">
+                                    <i class="bi bi-envelope me-2"></i>
+                                    @Model.BuyerEmail
+                                </div>
+                                @if (!string.IsNullOrEmpty(Model.BuyerPhone))
+                                {
+                                    <div class="detail">
+                                        <i class="bi bi-telephone me-2"></i>
+                                        @Model.BuyerPhone
+                                    </div>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.BuyerName))
+                                {
+                                    <div class="detail">
+                                        <i class="bi bi-geo-alt me-2"></i>
+                                        @Model.BuyerName
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contract Actions -->
+                @if (Model.Status == "Pending")
+                {
+                    <div class="content-card mb-4">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="bi bi-gear me-2"></i>
+                                Contract Actions
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-3">Please review the contract terms and decide whether to accept or reject this contract.</p>
+
+                            <form action="@Url.Action("UpdateStatus", "Contract", new { area = "Seller" })" method="POST" class="mb-3">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="ContractId" value="@Model.ContractId">
+                                <input type="hidden" name="Status" value="Approved">
+                                <button type="submit"
+                                        class="btn btn-success w-100 mb-2"
+                                        onclick="return confirm('Are you sure you want to approve this contract? This action cannot be undone.')">
+                                    <i class="bi bi-check-circle me-2"></i>Approve Contract
+                                </button>
+                            </form>
+
+                            <form action="@Url.Action("UpdateStatus", "Contract", new { area = "Seller" })" method="POST">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="ContractId" value="@Model.ContractId">
+                                <input type="hidden" name="Status" value="Rejected">
+                                <button type="submit"
+                                        class="btn btn-danger w-100"
+                                        onclick="return confirm('Are you sure you want to reject this contract? This action cannot be undone.')">
+                                    <i class="bi bi-x-circle me-2"></i>Reject Contract
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+
+                <!-- Timeline -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="bi bi-clock me-2"></i>
+                            Contract Timeline
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            <div class="timeline-item @(Model.Status != "Pending" ? "completed" : "active")">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Contract Created</div>
+                                    <div class="timeline-date">Date awarded</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item @(Model.Status == "Approved" || Model.Status == "Active" || Model.Status == "Completed" ? "completed" : (Model.Status == "Pending" ? "active" : ""))">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Seller Approval</div>
+                                    <div class="timeline-date">
+                                        @if (Model.Status == "Pending")
+                                        {
+                                            <text>Awaiting your decision</text>
+                                        }
+                                        else
+                                        {
+                                            @(Model.EndDate?.ToString("MMM dd, yyyy") ?? "N/A")
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item @(Model.Status == "Active" || Model.Status == "Completed" ? "active" : "")">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Execution Phase</div>
+                                    <div class="timeline-date">
+                                        @if (Model.Status == "Active")
+                                        {
+                                            <text>In progress</text>
+                                        }
+                                        else if (Model.Status == "Completed")
+                                        {
+                                            <text>Completed</text>
+                                        }
+                                        else
+                                        {
+                                            <text>Not started</text>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <style>
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+            .detail-item label {
+                font-weight: 600;
+                color: #495057;
+                min-width: 150px;
+                margin-bottom: 0;
+            }
+
+            .detail-item .value {
+                color: #212529;
+                flex: 1;
+            }
+
+        .entity-info {
+            text-align: center;
+        }
+
+        .entity-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #495057;
+        }
+
+        .entity-details .detail {
+            margin-bottom: 0.5rem;
+            color: #6c757d;
+        }
+
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+            .status-badge.status-success {
+                background: #d1e7dd;
+                color: #0f5132;
+            }
+
+            .status-badge.status-warning {
+                background: #fff3cd;
+                color: #664d03;
+            }
+
+            .status-badge.status-info {
+                background: #cff4fc;
+                color: #055160;
+            }
+
+            .status-badge.status-danger {
+                background: #f8d7da;
+                color: #721c24;
+            }
+
+            .status-badge.status-secondary {
+                background: #e2e3e5;
+                color: #41464b;
+            }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -2rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #dee2e6;
+        }
+
+        .timeline-item.completed .timeline-marker {
+            background: #198754;
+        }
+
+        .timeline-item.active .timeline-marker {
+            background: #0d6efd;
+        }
+
+        .timeline-content {
+            margin-left: 0;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-date {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+    </style>
+}

@@ -1,0 +1,103 @@
+﻿@model Wasel.ViewModels.TicketVMs.CreateTicketViewModel
+@{
+    ViewData["Title"] = "Create Support Ticket";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<section class="dashboard-section mt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="page-title">Create Support Ticket</h1>
+                        <p class="page-subtitle">Get help from our support team</p>
+                    </div>
+                    <a href="@Url.Action("Index", "Ticket")" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Tickets
+                    </a>
+                </div>
+
+                <div class="content-card">
+                    <div class="card-body">
+                        @if (TempData["SuccessMessage"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="bi bi-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <form asp-action="Create" method="POST">
+                            @Html.AntiForgeryToken()
+
+                            <div class="mb-3">
+                                <label asp-for="TicketIssueType" class="form-label">Issue Type <span class="text-danger">*</span></label>
+                                <select asp-for="TicketIssueType" class="form-select" required>
+                                    <option value="">Select Issue Type</option>
+                                    @foreach (var type in Model.IssueTypes)
+                                    {
+                                        <option value="@type">@type</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="TicketIssueType" class="text-danger small"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="TicketDescription" class="form-label">Description <span class="text-danger">*</span></label>
+                                <textarea asp-for="TicketDescription" class="form-control"
+                                          rows="6" placeholder="Please describe your issue in detail..."
+                                          required></textarea>
+                                <div class="form-text">
+                                    Be as detailed as possible to help us understand and resolve your issue quickly.
+                                </div>
+                                <span asp-validation-for="TicketDescription" class="text-danger small"></span>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-send me-2"></i>Submit Ticket
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <style>
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+    </style>
+}

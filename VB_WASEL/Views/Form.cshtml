@@ -1,0 +1,575 @@
+﻿@{
+    ViewData["Title"] = "Tender Form";
+}
+
+<!-- CREATE TENDER SECTION -->
+<section class="create-tender-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="form-container">
+                    <!-- Form Steps -->
+                    <div class="form-steps">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Tender Details</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Evaluation Criteria</div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Review & Submit</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Tender Details -->
+                    <div class="form-section active" id="step1">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="bi bi-info-circle"></i>
+                                Tender Basic Information
+                            </h2>
+                            <p class="section-description">Provide the essential details about your procurement needs</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="bi bi-card-heading"></i>
+                                        Tender Title *
+                                    </label>
+                                    <input type="text" class="form-control" id="tenderTitle"
+                                           placeholder="Enter tender title" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="bi bi-card-heading"></i>
+                                        Budget *
+                                    </label>
+                                    <input type="number" class="form-control" id="Budget"
+                                           placeholder="Enter budget amount" step="0.01" min="0" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="bi bi-tags"></i>
+                                        Tender Subject *
+                                    </label>
+                                    <select class="form-select" id="tenderSubject" required>
+                                        <option value="">Select Category</option>
+                                        <option value="construction">Construction</option>
+                                        <option value="manufacturing">Manufacturing</option>
+                                        <option value="logistics">Logistics & Supply Chain</option>
+                                        <option value="services">Professional Services</option>
+                                        <option value="supplies">Raw Materials & Supplies</option>
+                                        <option value="equipment">Equipment & Machinery</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-text-paragraph"></i>
+                                Tender Description *
+                            </label>
+                            <textarea class="form-control form-textarea" id="tenderDescription"
+                                      placeholder="Describe the tender requirements, scope, and objectives"
+                                      required></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="bi bi-calendar"></i>
+                                        Publish Date *
+                                    </label>
+                                    <input type="date" class="form-control" id="publishDate" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="bi bi-clock"></i>
+                                        Submission Deadline *
+                                    </label>
+                                    <input type="datetime-local" class="form-control" id="submissionDeadline" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="bi bi-award"></i>
+                                        Award Date
+                                    </label>
+                                    <input type="date" class="form-control" id="awardDate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-list-check"></i>
+                                Technical Specifications & Requirements
+                            </label>
+                            <textarea class="form-control form-textarea" id="technicalSpecs"
+                                      placeholder="Provide detailed technical specifications and requirements"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Evaluation Criteria -->
+                    <div class="form-section" id="step2">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="bi bi-clipboard-check"></i>
+                                Bid Evaluation Criteria
+                            </h2>
+                            <p class="section-description">Define how bids will be evaluated and scored (CRITERIA Entity)</p>
+                        </div>
+
+                        <div class="criteria-section">
+                            <div class="criteria-header">
+                                <h3 class="criteria-title">Evaluation Criteria</h3>
+                                <button type="button" class="btn btn-outline-primary btn-sm" id="addCriterion">
+                                    <i class="bi bi-plus"></i> Add Criterion
+                                </button>
+                            </div>
+
+                            <div id="criteriaList">
+                                <!-- Default Criteria Items -->
+                                <div class="criteria-item">
+                                    <div class="criteria-row">
+                                        <div>
+                                            <label class="form-label">Criteria Name *</label>
+                                            <input type="text" class="form-control criteria-name" value="Price Competitiveness" required>
+                                        </div>
+                                        <div>
+                                            <label class="form-label">Weight *</label>
+                                            <input type="number" class="form-control criteria-weight" value="40" min="0" max="100" step="5"
+                                                   required>
+                                        </div>
+                                        <div>
+                                            <label class="form-label">Price</label>
+                                            <input type="text" class="form-control criteria-price" placeholder="$500K - $750K">
+                                        </div>
+                                        <div>
+                                            <label class="form-label">Delivery Time</label>
+                                            <input type="text" class="form-control criteria-delivery" placeholder="8-12 weeks">
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-outline-danger btn-sm mt-4 remove-criterion">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label class="form-label">Criteria Description</label>
+                                        <textarea class="form-control form-textarea criteria-description"
+                                                  rows="2">Evaluation of proposed price against project budget and market rates</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="criteria-item">
+                                    <div class="criteria-row">
+                                        <div>
+                                            <label class="form-label">Criteria Name *</label>
+                                            <input type="text" class="form-control criteria-name" value="Technical Capability" required>
+                                        </div>
+                                        <div>
+                                            <label class="form-label">Weight *</label>
+                                            <input type="number" class="form-control criteria-weight" value="30" min="0" max="100" step="5"
+                                                   required>
+                                        </div>
+                                        <div>
+                                            <label class="form-label">Price</label>
+                                            <input type="text" class="form-control criteria-price" placeholder="Equipment quality">
+                                        </div>
+                                        <div>
+                                            <label class="form-label">Delivery Time</label>
+                                            <input type="text" class="form-control criteria-delivery" placeholder="Implementation timeline">
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-outline-danger btn-sm mt-4 remove-criterion">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label class="form-label">Criteria Description</label>
+                                        <textarea class="form-control form-textarea criteria-description"
+                                                  rows="2">Assessment of technical expertise, equipment capabilities, and relevant experience</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="total-weight">
+                                Total Weight: <span id="totalWeight">70</span>%
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>Note:</strong> All criteria weights must total 100%. The system will automatically calculate bid
+                            scores based on these criteria.
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Review & Submit -->
+                    <div class="form-section" id="step3">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="bi bi-eye"></i>
+                                Review & Submit
+                            </h2>
+                            <p class="section-description">Review all information before publishing your tender</p>
+                        </div>
+
+                        <!-- TENDERS Entity Preview -->
+                        <div class="preview-card">
+                            <div class="preview-header">
+                                <h3 class="preview-title">TENDERS Entity Data</h3>
+                            </div>
+                            <div class="preview-content">
+                                <div class="preview-row">
+                                    <span class="preview-label">Tender Title:</span>
+                                    <span class="preview-value" id="previewTitle">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Tender Subject:</span>
+                                    <span class="preview-value" id="previewSubject">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Tender Description:</span>
+                                    <span class="preview-value" id="previewDescription">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Tender Status:</span>
+                                    <span class="preview-value">Open</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Publish Date:</span>
+                                    <span class="preview-value" id="previewPublishDate">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Submission Deadline:</span>
+                                    <span class="preview-value" id="previewDeadline">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Award Date:</span>
+                                    <span class="preview-value" id="previewAwardDate">-</span>
+                                </div>
+                                <div class="preview-row">
+                                    <span class="preview-label">Buyer ID:</span>
+                                    <span class="preview-value">Current Buyer</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CRITERIA Entity Preview -->
+                        <div class="preview-card">
+                            <div class="preview-header">
+                                <h3 class="preview-title">CRITERIA Entity Data</h3>
+                            </div>
+                            <div class="preview-content" id="previewCriteria">
+                                <!-- Criteria will be populated here -->
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="confirmAccuracy" required>
+                                <label class="form-check-label" for="confirmAccuracy">
+                                    I confirm that all TENDERS and CRITERIA entity data is accurate and complete
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                <label class="form-check-label" for="agreeTerms">
+                                    I agree to publish this tender on the Wasel platform and understand it will be visible to all
+                                    registered suppliers
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Navigation -->
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-prev" id="prevBtn" style="display: none;">
+                            <i class="bi bi-arrow-left me-2"></i>Previous
+                        </button>
+                        <button type="button" class="btn btn-next" id="nextBtn">
+                            Next<i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                        <button type="button" class="btn btn-submit" id="submitBtn" style="display: none;">
+                            <i class="bi bi-send me-2"></i>Publish Tender
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let currentStep = 1;
+            const totalSteps = 3;
+
+            // Initialize date fields
+            const today = new Date().toISOString().split('T')[0];
+            const nextWeek = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+            const nextMonth = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+
+            document.getElementById('publishDate').value = today;
+            document.getElementById('submissionDeadline').value = nextWeek + 'T23:59';
+            document.getElementById('awardDate').value = nextMonth;
+
+            // Navigation functions
+            function updateNavigation() {
+                document.getElementById('prevBtn').style.display = currentStep > 1 ? 'block' : 'none';
+                document.getElementById('nextBtn').style.display = currentStep < totalSteps ? 'block' : 'none';
+                document.getElementById('submitBtn').style.display = currentStep === totalSteps ? 'block' : 'none';
+
+                // Update steps
+                document.querySelectorAll('.step').forEach((step, index) => {
+                    const stepNum = index + 1;
+                    step.classList.remove('active', 'completed');
+                    if (stepNum === currentStep) {
+                        step.classList.add('active');
+                    } else if (stepNum < currentStep) {
+                        step.classList.add('completed');
+                    }
+                });
+
+                // Update form sections
+                document.querySelectorAll('.form-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(`step${currentStep}`).classList.add('active');
+
+                // Update preview on step 3
+                if (currentStep === 3) {
+                    updatePreview();
+                }
+            }
+
+            function nextStep() {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    updateNavigation();
+                }
+            }
+
+            function prevStep() {
+                currentStep--;
+                updateNavigation();
+            }
+
+            function validateStep(step) {
+                switch (step) {
+                    case 1:
+                        const title = document.getElementById('tenderTitle').value;
+                        const subject = document.getElementById('tenderSubject').value;
+                        const description = document.getElementById('tenderDescription').value;
+
+                        if (!title || !subject || !description) {
+                            alert('Please fill in all required TENDERS entity fields');
+                            return false;
+                        }
+                        break;
+                    case 2:
+                        const totalWeight = parseInt(document.getElementById('totalWeight').textContent);
+                        if (totalWeight !== 100) {
+                            alert('Total CRITERIA entity weights must equal 100%');
+                            return false;
+                        }
+
+                        // Validate individual criteria
+                        const criteriaNames = document.querySelectorAll('.criteria-name');
+                        for (let name of criteriaNames) {
+                            if (!name.value.trim()) {
+                                alert('All CRITERIA entities must have a Criteria_Name');
+                                return false;
+                            }
+                        }
+                        break;
+                }
+                return true;
+            }
+
+            // Update preview data
+            function updatePreview() {
+                // TENDERS Entity preview
+                document.getElementById('previewTitle').textContent = document.getElementById('tenderTitle').value || '-';
+                document.getElementById('previewSubject').textContent = document.getElementById('tenderSubject').value || '-';
+                const description = document.getElementById('tenderDescription').value;
+                document.getElementById('previewDescription').textContent = (description && description.length > 100 ? description.substring(0, 100) + '...' : description) || '-';
+                document.getElementById('previewPublishDate').textContent = document.getElementById('publishDate').value || '-';
+                document.getElementById('previewDeadline').textContent = document.getElementById('submissionDeadline').value || '-';
+                document.getElementById('previewAwardDate').textContent = document.getElementById('awardDate').value || '-';
+
+                // CRITERIA Entity preview
+                const criteriaPreview = document.getElementById('previewCriteria');
+                criteriaPreview.innerHTML = '';
+
+                document.querySelectorAll('.criteria-item').forEach((item, index) => {
+                    const name = item.querySelector('.criteria-name').value;
+                    const weight = item.querySelector('.criteria-weight').value;
+                    const price = item.querySelector('.criteria-price').value;
+                    const delivery = item.querySelector('.criteria-delivery').value;
+                    const description = item.querySelector('.criteria-description').value;
+
+                    const criteriaCard = document.createElement('div');
+                    criteriaCard.className = 'mb-3 p-3 border rounded';
+                    criteriaCard.innerHTML = `
+                        <div class="preview-row">
+                            <span class="preview-label">Criteria Num:</span>
+                            <span class="preview-value">CR-${String(index + 1).padStart(3, '0')}</span>
+                        </div>
+                        <div class="preview-row">
+                            <span class="preview-label">Criteria Name:</span>
+                            <span class="preview-value">${name}</span>
+                        </div>
+                        <div class="preview-row">
+                            <span class="preview-label">Weight:</span>
+                            <span class="preview-value">${weight}%</span>
+                        </div>
+                        <div class="preview-row">
+                            <span class="preview-label">Price:</span>
+                            <span class="preview-value">${price || '-'}</span>
+                        </div>
+                        <div class="preview-row">
+                            <span class="preview-label">Delivery Time:</span>
+                            <span class="preview-value">${delivery || '-'}</span>
+                        </div>
+                        <div class="preview-row">
+                            <span class="preview-label">Criteria Description:</span>
+                            <span class="preview-value">${(description && description.length > 80 ? description.substring(0, 80) + '...' : description) || '-'}</span>
+                        </div>
+                    `;
+                    criteriaPreview.appendChild(criteriaCard);
+                });
+            }
+
+            // Criteria management
+            document.getElementById('addCriterion').addEventListener('click', function () {
+                const criteriaList = document.getElementById('criteriaList');
+                const newCriterion = document.createElement('div');
+                newCriterion.className = 'criteria-item';
+                newCriterion.innerHTML = `
+                    <div class="criteria-row">
+                        <div>
+                            <label class="form-label">Criteria Name *</label>
+                            <input type="text" class="form-control criteria-name" placeholder="e.g., Quality Assurance" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Weight *</label>
+                            <input type="number" class="form-control criteria-weight" value="10" min="0" max="100" step="5" required>
+                        </div>
+                        <div>
+                            <label class="form-label">Price</label>
+                            <input type="text" class="form-control criteria-price" placeholder="Cost parameter">
+                        </div>
+                        <div>
+                            <label class="form-label">Delivery Time</label>
+                            <input type="text" class="form-control criteria-delivery" placeholder="Timeline parameter">
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-danger btn-sm mt-4 remove-criterion">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label class="form-label">Criteria Description</label>
+                        <textarea class="form-control form-textarea criteria-description" rows="2" placeholder="Describe how this criterion will be evaluated"></textarea>
+                    </div>
+                `;
+                criteriaList.appendChild(newCriterion);
+                updateTotalWeight();
+            });
+
+            // Remove criterion
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.remove-criterion')) {
+                    e.target.closest('.criteria-item').remove();
+                    updateTotalWeight();
+                }
+            });
+
+            // Update total weight
+            function updateTotalWeight() {
+                let total = 0;
+                document.querySelectorAll('.criteria-weight').forEach(input => {
+                    total += parseInt(input.value) || 0;
+                });
+                document.getElementById('totalWeight').textContent = total;
+            }
+
+            document.addEventListener('input', function (e) {
+                if (e.target.classList.contains('criteria-weight')) {
+                    updateTotalWeight();
+                }
+            });
+
+            // Form submission
+            document.getElementById('submitBtn').addEventListener('click', function () {
+                if (document.getElementById('confirmAccuracy').checked && document.getElementById('agreeTerms').checked) {
+                    // Collect TENDERS entity data
+                    const tenderData = {
+                        tenderTitle: document.getElementById('tenderTitle').value,
+                        tenderSubject: document.getElementById('tenderSubject').value,
+                        tenderDescription: document.getElementById('tenderDescription').value,
+                        tenderStatus: 'Open',
+                        publishDate: document.getElementById('publishDate').value,
+                        submissionDeadline: document.getElementById('submissionDeadline').value,
+                        awardDate: document.getElementById('awardDate').value,
+                        technicalSpecs: document.getElementById('technicalSpecs').value
+                    };
+
+                    // Collect CRITERIA entity data
+                    const criteriaData = Array.from(document.querySelectorAll('.criteria-item')).map((item, index) => ({
+                        criteriaNum: `CR-${String(index + 1).padStart(3, '0')}`,
+                        criteriaName: item.querySelector('.criteria-name').value,
+                        criteriaDescription: item.querySelector('.criteria-description').value,
+                        weight: parseInt(item.querySelector('.criteria-weight').value),
+                        price: item.querySelector('.criteria-price').value,
+                        deliveryTime: item.querySelector('.criteria-delivery').value
+                    }));
+
+                    console.log('TENDERS Entity:', tenderData);
+                    console.log('CRITERIA Entities:', criteriaData);
+
+                    // Show success message
+                    alert('🎉 Your tender has been published successfully!\n\nTENDERS and CRITERIA entities created. Suppliers can now view and submit bids.');
+
+                    // Redirect to tenders page
+                    setTimeout(() => {
+                        window.location.href = '@Url.Action("Index", "Tender", new { area = "Buyer" })';
+                    }, 2000);
+                } else {
+                    alert('Please confirm the accuracy of TENDERS and CRITERIA entity data before submitting.');
+                }
+            });
+
+            // Event listeners
+            document.getElementById('nextBtn').addEventListener('click', nextStep);
+            document.getElementById('prevBtn').addEventListener('click', prevStep);
+
+            // Initialize
+            updateNavigation();
+            updateTotalWeight();
+        });
+    </script>
+}
